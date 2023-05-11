@@ -76,7 +76,6 @@ public class Wallet : MonoBehaviour
     }
     public void GoBackToMainMenu()
     {
-
         MenuUIManager.Instance.SDKMenuScreen.SetActive(true);
         gameObject.SetActive(false);
     }
