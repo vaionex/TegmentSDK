@@ -6,10 +6,11 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
 using TMPro;
-public class SendPayment : MonoBehaviour
+
+public class RawTransaction : MonoBehaviour
 {
     [HideInInspector]
-    public SendPaymentRootData returndata = new SendPaymentRootData();
+    public RawTXRootData returndata = new RawTXRootData();
 
     public TMP_InputField recieverAddress;
     public TMP_InputField Amount;
@@ -18,26 +19,26 @@ public class SendPayment : MonoBehaviour
 
     public void Start()
     {
-        
+
     }
 
 
 
-    public async void SendPaymentButton()
+    public async void CreateRawTxButton()
     {
-        SendCoinsRequest sendCoinsRequest = new SendCoinsRequest();
-        SendCoinsData sendCoinsData = new SendCoinsData();
+        RawTxRequest rawTxRequest = new RawTxRequest();
+        RawTxData rawTxData = new RawTxData();
 
-        sendCoinsData.to = recieverAddress.text;
-        sendCoinsData.amount =double.Parse (Amount.text.ToString());
-        sendCoinsRequest.dataArray = new SendCoinsData[1] ;
-        sendCoinsRequest.dataArray[0] = sendCoinsData;
-        string strJsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(sendCoinsRequest);
+        rawTxData.to = recieverAddress.text;
+        rawTxData.amount = double.Parse(Amount.text.ToString());
+        rawTxRequest.dataArray = new RawTxData[1];
+        rawTxRequest.dataArray[0] = rawTxData;
+        string strJsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(rawTxRequest);
 
-        var result = await NetworkManager.Instance.PostRequestWithAuthToken(RelysiaSDKManager.Instance.AuthToken, API_constants.send, strJsonReq);
+        var result = await NetworkManager.Instance.PostRequestWithAuthToken(RelysiaSDKManager.Instance.AuthToken, API_constants.rawtx, strJsonReq);
         JObject parsedResponse = JObject.Parse(result);
         InfoBox.text = parsedResponse["data"]["msg"].ToString().Replace("_", " ");
-        returndata = JsonUtility.FromJson<SendPaymentRootData>(parsedResponse.ToString());
+        returndata = JsonUtility.FromJson<RawTXRootData>(parsedResponse.ToString());
         if (returndata.data.status == "success")
         {
             MenuUIManager.Instance.GoToMainMenu(gameObject);
@@ -45,11 +46,12 @@ public class SendPayment : MonoBehaviour
 
         Debug.Log("result: " + result);
     }
+
  
+
     public void GoBackToMainMenu()
     {
         MenuUIManager.Instance.SDKMenuScreen.SetActive(true);
         gameObject.SetActive(false);
     }
-
 }

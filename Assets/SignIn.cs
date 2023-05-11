@@ -20,7 +20,13 @@ public class SignIn : MonoBehaviour
 
     public async void ResetPasswordButton()
     {
-        var result = await SendRecoveryEmail(ResetPassEmail.text);
+        ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest();
+        resetPasswordRequest.email = ResetPassEmail.text;
+        string strJsonReq = JsonUtility.ToJson(resetPasswordRequest);
+
+        //var result = await SendRecoveryEmail(ResetPassEmail.text);
+        var result = await NetworkManager.Instance.PostRequest(API_constants.passwordReset, strJsonReq);
+
         JObject parsedResponse = JObject.Parse(result);
         ResetPassErrorPrompt.text = parsedResponse["data"]["msg"].ToString();
         Resetreturndata = JsonUtility.FromJson<ResetPassDataRoot>(parsedResponse.ToString());
@@ -33,7 +39,7 @@ public class SignIn : MonoBehaviour
     }
 
 
-    public async Task<string> SendRecoveryEmail(string email)
+   /* public async Task<string> SendRecoveryEmail(string email)
     {
         string url = API_constants.baseURL + "/v1/reset/password";
 
@@ -49,7 +55,7 @@ public class SignIn : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("accept", "*/*");
+       
 
         request.SendWebRequest();
 
@@ -99,8 +105,7 @@ public class SignIn : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("accept", "*/*");
-
+       
         request.SendWebRequest();
 
         //Wait while request is not done.
@@ -126,11 +131,19 @@ public class SignIn : MonoBehaviour
             Debug.Log("Request Failed. Error:" + request.error);
             return request.downloadHandler.text;
         }
-    }
+    }*/
 
     public async void LoginButton()
     {
-        var result = await LogIn(LogInEmail.text, LogInPassword.text);
+        LogInRequest logInRequest = new LogInRequest();
+        logInRequest.email = LogInEmail.text;
+        logInRequest.password = LogInPassword.text;
+
+        string strJsonReq = JsonUtility.ToJson(logInRequest);
+
+        //var result = await LogIn(LogInEmail.text, LogInPassword.text);
+        var result = await NetworkManager.Instance.PostRequest(API_constants.auth, strJsonReq);
+
         JObject parsedResponse = JObject.Parse(result);
         LoginErrorPrompt.text = parsedResponse["data"]["msg"].ToString().Replace("_", " ");
         returndata = JsonUtility.FromJson<AuthDataRoot>(parsedResponse.ToString());
@@ -138,9 +151,12 @@ public class SignIn : MonoBehaviour
         {
             RelysiaSDKManager.Instance.SetAPIResultData(returndata);
             MenuUIManager.Instance.GoToMainMenu(gameObject);
+            
         }
 
         Debug.Log("result: " + result);
     }
+
+  
 
 }

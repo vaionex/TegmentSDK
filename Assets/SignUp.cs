@@ -14,7 +14,7 @@ public class SignUp : MonoBehaviour
 
     public AuthDataRoot returndata = new AuthDataRoot();
 
-    public async Task<string> Sign_Up(string _email, string _password)
+  /* public async Task<string> Sign_Up(string _email, string _password)
     {
         string url = API_constants.baseURL + "/v1/signUp";
 
@@ -29,8 +29,7 @@ public class SignUp : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("accept", "*/*");
-
+       
         request.SendWebRequest();
 
         while (!request.isDone)
@@ -59,11 +58,19 @@ public class SignUp : MonoBehaviour
 
         }
     }
-
+  */
 
     public async void SignUpButton()
     {
-        var result = await Sign_Up(SignUpEmail.text, SignUpPassword.text);
+        SignUpRequest signUpRequest = new SignUpRequest();
+        signUpRequest.email = SignUpEmail.text;
+        signUpRequest.password = SignUpPassword.text;
+
+        string strJsonReq = JsonUtility.ToJson(signUpRequest);
+
+        //var result = await Sign_Up(SignUpEmail.text, SignUpPassword.text);
+        var result = await NetworkManager.Instance.PostRequest(API_constants.signUP, strJsonReq);
+
         JObject parsedResponse = JObject.Parse(result);
         SignUpErrorPrompt.text = parsedResponse["data"]["msg"].ToString().Replace("_", " ");
         returndata = JsonUtility.FromJson<AuthDataRoot>(parsedResponse.ToString());

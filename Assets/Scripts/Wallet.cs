@@ -3,28 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
-
+using UnityEngine.UI;
+using TMPro;
 
 public class Wallet : MonoBehaviour
 {
-    public string authToken;
+
+    public TMP_InputField WalletAddress;
+    public TMP_InputField mnemonicPhrase;
+    public Toggle activate;
+    public Button btnCreateWallet;
+   
+    private CreateWalletRoot retunDataCreateWallet = new CreateWalletRoot();
 
     //Start is called before the first frame update
-    async void Start()
+    public void Start()
     {
-        authToken = RelysiaSDKManager.Instance.AuthToken;
+        btnCreateWallet.onClick.AddListener(() => CreateWallet());
     }
 
-    public async Task<string> SignUp(string authToken)
-    {
-        string url = API_constants.baseURL + "/v1/wallets";
 
+    public void CreateWallet()
+    {
+        var result= CreateWalletTask();
+        retunDataCreateWallet = JsonUtility.FromJson<CreateWalletRoot>(result.ToString());
+        if (retunDataCreateWallet.data.status == "success")
+        {
+            RelysiaSDKManager.Instance.WalletId=retunDataCreateWallet.data.walletID;
+            MenuUIManager.Instance.SDKMenuScreen.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+    public async Task<string> CreateWalletTask()
+    {
+        string url = API_constants.baseURL + API_constants.createWallet;
+        Debug.Log(url);
         UnityWebRequest request =  UnityWebRequest.Get(url);
         
         
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("accept", "*/*");
-        request.SetRequestHeader("authToken", authToken);
+        request.SetRequestHeader("authToken", RelysiaSDKManager.Instance.AuthToken);
+        request.SetRequestHeader("walletTitle", WalletAddress.text);
+        request.SetRequestHeader("paymailActivate", activate.isOn.ToString().ToLower());
 
         request.SendWebRequest();
 
@@ -36,7 +57,7 @@ public class Wallet : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Request is successful.");
+            Debug.Log("Request is successful."+ request.downloadHandler.text);
 
             //var jsonResponse = request.downloadHandler.text;
             //JObject parsedResponse = JObject.Parse(jsonResponse);
@@ -52,6 +73,12 @@ public class Wallet : MonoBehaviour
             return request.downloadHandler.text;
             
         }
+    }
+    public void GoBackToMainMenu()
+    {
+
+        MenuUIManager.Instance.SDKMenuScreen.SetActive(true);
+        gameObject.SetActive(false);
     }
 
 }

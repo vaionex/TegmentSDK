@@ -6,38 +6,41 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
 using TMPro;
-public class SendPayment : MonoBehaviour
+
+public class DropTransaction : MonoBehaviour
 {
     [HideInInspector]
-    public SendPaymentRootData returndata = new SendPaymentRootData();
+    public DropTXRootData returndata = new DropTXRootData();
 
     public TMP_InputField recieverAddress;
     public TMP_InputField Amount;
+    public TMP_InputField TokenId;
     public TMP_InputField Notes;
+
     public TextMeshProUGUI InfoBox;
 
     public void Start()
     {
-        
+
     }
 
 
 
-    public async void SendPaymentButton()
+    public async void CreateDropTxButton()
     {
-        SendCoinsRequest sendCoinsRequest = new SendCoinsRequest();
-        SendCoinsData sendCoinsData = new SendCoinsData();
+        DropRequest dropTxRequest = new DropRequest();
+        DropData dropTxData = new DropData();
 
-        sendCoinsData.to = recieverAddress.text;
-        sendCoinsData.amount =double.Parse (Amount.text.ToString());
-        sendCoinsRequest.dataArray = new SendCoinsData[1] ;
-        sendCoinsRequest.dataArray[0] = sendCoinsData;
-        string strJsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(sendCoinsRequest);
+        dropTxData.to = recieverAddress.text;
+        dropTxData.amount = double.Parse(Amount.text.ToString());
+        dropTxRequest.dataArray = new DropData[1];
+        dropTxRequest.dataArray[0] = dropTxData;
+        string strJsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(dropTxRequest);
 
-        var result = await NetworkManager.Instance.PostRequestWithAuthToken(RelysiaSDKManager.Instance.AuthToken, API_constants.send, strJsonReq);
+        var result = await NetworkManager.Instance.PostRequestWithAuthToken(RelysiaSDKManager.Instance.AuthToken, API_constants.drop, strJsonReq);
         JObject parsedResponse = JObject.Parse(result);
         InfoBox.text = parsedResponse["data"]["msg"].ToString().Replace("_", " ");
-        returndata = JsonUtility.FromJson<SendPaymentRootData>(parsedResponse.ToString());
+        returndata = JsonUtility.FromJson<DropTXRootData>(parsedResponse.ToString());
         if (returndata.data.status == "success")
         {
             MenuUIManager.Instance.GoToMainMenu(gameObject);
@@ -45,11 +48,12 @@ public class SendPayment : MonoBehaviour
 
         Debug.Log("result: " + result);
     }
- 
+
+
+
     public void GoBackToMainMenu()
     {
         MenuUIManager.Instance.SDKMenuScreen.SetActive(true);
         gameObject.SetActive(false);
     }
-
 }

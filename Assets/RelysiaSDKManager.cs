@@ -15,10 +15,12 @@ public class RelysiaSDKManager : MonoBehaviour
 
     public AuthDataRoot returndata = new AuthDataRoot();
 
+    [HideInInspector]
     public string AuthToken = "";
-
+    [HideInInspector]
     public string UserId;
-
+    [HideInInspector]
+    public string WalletId;
 
     private void Awake()
     {
