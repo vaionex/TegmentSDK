@@ -330,3 +330,62 @@ public class DropTXRootData
     public int statusCode;
     public DropDataResponse data;
 }
+
+[Serializable]
+public class OfferDataResponse
+{
+    public string status;
+    public string msg;
+}
+
+[Serializable]
+public class OfferRootData
+{
+    public int statusCode;
+    public OfferDataResponse data;
+}
+
+
+
+[Serializable]
+public class SwapDataResponse
+{
+    public string status;
+    public string msg;
+}
+
+[Serializable]
+public class SwapRootData
+{
+    public int statusCode;
+    public SwapDataResponse data;
+}
+
+
+[Serializable]
+public class ExchangeDataResponse
+{
+    public string status;
+    public string msg;
+}
+
+[Serializable]
+public class ExchangeRootData
+{
+    public int statusCode;
+    public ExchangeDataResponse data;
+}
+
+[Serializable]
+public class SwapOfferDataResponse
+{
+    public string status;
+    public string msg;
+}
+
+[Serializable]
+public class SwapOfferRootData
+{
+    public int statusCode;
+    public SwapOfferDataResponse data;
+}

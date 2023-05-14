@@ -18,10 +18,6 @@ public class NetworkManager : MonoBehaviour
     }
    
 
- 
-
-
- 
 
     public async Task<Texture2D> GetRemoteTexture(string url)
     {

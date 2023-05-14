@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     public Button Balance;
     public Button RawTx;
     public Button DropTx;
+    
+
 
     public GameObject UI_UserInfo;
     public GameObject UI_GetAddress;
