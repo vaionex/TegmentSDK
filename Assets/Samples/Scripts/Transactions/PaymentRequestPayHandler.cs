@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// This class implements a sample to takes invoice and settles it.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class PaymentRequestPayHandler : MonoBehaviour
     {
@@ -31,7 +32,7 @@ namespace Tegment.Unity.Samples.Transactions
         {
             responseText.text = "";
 
-            Tegment.Transaction.PaymentRequestPay.SettleInvoice(invoiceID.text,merchantData.text,transaction.text,refundTo.text, memo.text, PaymentRequestPayTransactionCallBack);
+            Tegment.Transaction.PaymentRequestPay.SettleInvoice(invoiceID.text,merchantData.text,transaction.text,refundTo.text, memo.text, PaymentRequestPayTransactionCallBack,true);
         }
 
         /// <summary>

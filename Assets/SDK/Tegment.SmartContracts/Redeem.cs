@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.SmartContracts
 {
@@ -18,8 +19,11 @@ namespace Tegment.SmartContracts
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <returns></returns>
-        public static APIResponseFormatter<RedeemResponseFormatter> RedeemToken(double _amount, string _tokenID, int _sn, string _walletID, string _authToken)
+        public static void RedeemToken(double _amount, string _tokenID, int _sn, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, RedeemResponseFormatter> callback, bool enableLog = false)
         {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function RedeemToken");
 
             //Add Request Class Data
             RedeemRequestFormatter redeemRequestFormatter = new RedeemRequestFormatter();
@@ -37,13 +41,7 @@ namespace Tegment.SmartContracts
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
 
-            APIResponseFormatter<RedeemResponseFormatter> apiResponseFormatter = new APIResponseFormatter<RedeemResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.redeem, redeemRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<RedeemResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<RedeemResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            TegmentClient.Post<RedeemResponseFormatter>(PathConstants.baseURL + PathConstants.redeem, redeemRequestFormatter, callback);
         }
     }
 }

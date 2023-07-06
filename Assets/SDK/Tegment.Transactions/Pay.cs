@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -29,11 +30,16 @@ namespace Tegment.Transaction
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
         public static void PayTransaction(string _uri, string _type, string _mainProtocol, PayOutputRequest[] _Outputs,
             PayInputRequest[] _Inputs,string _network, string _paymentURL,int _creationTimeStamp, int _expirationTimeStamp,string _memo,
             string _isBSV,string _peer, string _peerData, string _peerProtocol, string _walletID, string _authToken,
-            System.Action<RequestException, ResponseHelper, PayResponseFormatter> callback)
+            System.Action<RequestException, ResponseHelper, PayResponseFormatter> callback, bool enableLog=false)
         {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function PayTransaction");
+
             PayRequestFormatter payRequestFormatter = new PayRequestFormatter();
             payRequestFormatter.uri = _uri;
             payRequestFormatter.type = _type;

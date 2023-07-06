@@ -5,7 +5,7 @@ using Tegment.Network;
 using Tegment.Utility;
 using System.Collections;
 using System.Threading.Tasks;
-
+using Tegment.Logs;
 namespace Tegment.Account
 {
     public static partial class Auth
@@ -17,12 +17,18 @@ namespace Tegment.Account
         /// <param name="_email"></param>
         /// <param name="_password"></param>
         /// <param name="callback"></param>
-        public static void GetauthToken(string _email, string _password, System.Action<RequestException, ResponseHelper,AuthResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetauthToken(string _email, string _password, System.Action<RequestException, ResponseHelper,AuthResponseFormatter> callback, bool enableLog=false)
         {
+            if(enableLog)
+                LogManager.WriteToLog("Request Function GetauthToken");
+
             AuthRequestFormatter authRequestFormatter = new AuthRequestFormatter();
             authRequestFormatter.email = _email;
             authRequestFormatter.password = _password;
 
+
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["Content-Type"]= "application/json";
             TegmentClient.DefaultRequestHeaders["accept"]= "*/*";

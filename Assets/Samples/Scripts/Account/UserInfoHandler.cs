@@ -9,6 +9,7 @@ namespace Tegment.Unity.Samples.Account
 {
     /// <summary>
     /// This class is used to get the user information whose loggedin
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
 
     public class UserInfoHandler : MonoBehaviour
@@ -22,7 +23,7 @@ namespace Tegment.Unity.Samples.Account
         public void UserInfo_Submit()
         {
             responseText.text = "";
-            Tegment.Account.UserInfo.GetUserInfo(TegmentSessionHandler.Instance._authToken, UserInfoCallBack);
+            Tegment.Account.UserInfo.GetUserInfo(TegmentSessionHandler.Instance._authToken, UserInfoCallBack,true);
         }
         /// <summary>
         /// callback handler to handle the response
@@ -35,7 +36,6 @@ namespace Tegment.Unity.Samples.Account
         /// <param name="userInfoResponse"></param>
         private void UserInfoCallBack(RequestException exception, ResponseHelper response, UserInfoResponseFormatter userInfoResponse)
         {
-            Debug.Log(response.Text);
             responseText.text = response.Text;
         }
         /// <summary>

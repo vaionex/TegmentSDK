@@ -10,6 +10,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This sample class is used get your wallet Address and paymail
     /// Receive a single address and the paymail alias to receive Coins or Token.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class AddressHandler : MonoBehaviour
     {
@@ -25,7 +26,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void Address_Submit()
         {
             responseText.text = "";
-            Tegment.Wallet.Address.GetAddress(walletID.text,TegmentSessionHandler.Instance._authToken, AddressCallBack);
+            Tegment.Wallet.Address.GetAddress(walletID.text,TegmentSessionHandler.Instance._authToken, AddressCallBack,true);
         }
 
         /// <summary>

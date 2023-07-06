@@ -4,6 +4,8 @@ using Tegment.Network;
 using Tegment.ResponseFormatter;
 using UnityEngine;
 using Tegment.Utility;
+using Tegment.Logs;
+
 namespace Tegment.Wallet
 {
     public static partial class Balance
@@ -20,8 +22,13 @@ namespace Tegment.Wallet
         /// <param name="_maxResults"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void GetBalanceData(string _nextPageToken,string _walletID, string _type,string _currency, string _compact, int _maxResults,  string _authToken, System.Action<RequestException, ResponseHelper, BalanceResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetBalanceData(string _nextPageToken,string _walletID, string _type,string _currency, string _compact, int _maxResults,  string _authToken, System.Action<RequestException, ResponseHelper, BalanceResponseFormatter> callback, bool enableLog=false)
         {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetBalanceData");
+
             if (!string.IsNullOrEmpty(_nextPageToken))
             {
                 TegmentClient.DefaultRequestParams["nextPageToken"] = _nextPageToken;

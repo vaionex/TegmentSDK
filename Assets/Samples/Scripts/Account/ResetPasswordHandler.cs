@@ -3,7 +3,11 @@ using TMPro;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
 
-//This class is used to reset password and send a confirmation to the registered mail.
+/// <summary>
+/// This class is used to reset password and send a confirmation to the registered mail.
+/// To disable logging, set the last param to false on SDK call
+/// </summary>
+
 namespace Tegment.Unity.Samples.Account
 {
     public class ResetPasswordHandler : MonoBehaviour
@@ -25,7 +29,7 @@ namespace Tegment.Unity.Samples.Account
         /// </summary>
         public void ResetPassword()
         {
-            Tegment.Account.ResetPassword.ResetUserPassword(email.text, ResetPasswordCallBack);
+            Tegment.Account.ResetPassword.ResetUserPassword(email.text, ResetPasswordCallBack,true);
         }
 
         /// <summary>

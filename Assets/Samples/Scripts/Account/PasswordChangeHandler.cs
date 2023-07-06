@@ -7,6 +7,7 @@ using Tegment.ResponseFormatter;
 
 /// <summary>
 /// Change password sample for existing users to change their password.
+/// To disable logging, set the last param to false on SDK call
 /// </summary>
 namespace Tegment.Unity.Samples.Account
 {
@@ -24,7 +25,7 @@ namespace Tegment.Unity.Samples.Account
         public void PasswordChange_Submit()
         {
             responseText.text = "";
-            Tegment.Account.PasswordChange.PasswordChangeUser(newPassword.text, TegmentSessionHandler.Instance._authToken, PasswordChangeCallBack);
+            Tegment.Account.PasswordChange.PasswordChangeUser(newPassword.text, TegmentSessionHandler.Instance._authToken, PasswordChangeCallBack,true);
         }
 
         /// <summary>

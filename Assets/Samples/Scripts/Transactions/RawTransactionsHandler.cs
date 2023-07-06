@@ -7,7 +7,8 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// This class implements a sample to build and return Raw Transaction
-    /// Use the /rawTx  containing a single input and output. Transactions can be held and the utxo that is used will be blocked from the user access. 
+    /// Use the /rawTx  containing a single input and output. Transactions can be held and the utxo that is used will be blocked from the user access.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class RawTransactionsHandler : MonoBehaviour
     {
@@ -35,7 +36,7 @@ namespace Tegment.Unity.Samples.Transactions
                 amountVal = double.Parse(amount.text);
             }
             responseText.text = "";
-            Tegment.Transaction.RawTX.RawTransaction(walletId.text, To.text, amountVal, TegmentSessionHandler.Instance._authToken, RawTransactionCallBack);
+            Tegment.Transaction.RawTX.RawTransaction(walletId.text, To.text, amountVal, TegmentSessionHandler.Instance._authToken, RawTransactionCallBack,true);
         }
 
 

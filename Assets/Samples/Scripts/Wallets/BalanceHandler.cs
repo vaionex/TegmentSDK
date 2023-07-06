@@ -11,6 +11,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This class implements a sample to get your wallet balance
     /// Returns both coin and token balances.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class BalanceHandler : MonoBehaviour
     {
@@ -47,7 +48,7 @@ namespace Tegment.Unity.Samples.Wallets
             {
                 maxResultVal = int.Parse(maxResults.text);
             }
-            Tegment.Wallet.Balance.GetBalanceData(nextPageToken.text,walletID.text,_type.text,currency.text,compact.isOn.ToString().ToLower(), maxResultVal, TegmentSessionHandler.Instance._authToken, BalanceCallBack);
+            Tegment.Wallet.Balance.GetBalanceData(nextPageToken.text,walletID.text,_type.text,currency.text,compact.isOn.ToString().ToLower(), maxResultVal, TegmentSessionHandler.Instance._authToken, BalanceCallBack,true);
         }
 
         /// <summary>

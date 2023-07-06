@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -15,8 +16,12 @@ namespace Tegment.Transaction
         /// <param name="_swapHex"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void InspectTransaction(string _swapHex,string _authToken, System.Action<RequestException, ResponseHelper, InspectResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void InspectTransaction(string _swapHex,string _authToken, System.Action<RequestException, ResponseHelper, InspectResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function InspectTransaction");
+
             InspectRequestFormatter inspectRequestFormatter = new InspectRequestFormatter();
             InspectRequestDataArray inspectRequestDataArray = new InspectRequestDataArray();
             inspectRequestDataArray.swapHex = _swapHex;

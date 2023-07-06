@@ -7,7 +7,8 @@ using Tegment.RequestFormatter;
 namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
-    /// this class implements sample that Invoices allow merchants to specify the amount of BSV or Tokens they require to complete a value exchange, such as selling a Product.
+    /// This class implements a sample that Invoices allow merchants to specify the amount of BSV or Tokens they require to complete a value exchange, such as selling a Product.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class PaymentRequestV1Handler : MonoBehaviour
     {
@@ -23,7 +24,7 @@ namespace Tegment.Unity.Samples.Transactions
         {
             responseText.text = "";
 
-            Tegment.Transaction.PaymentRequest.GetPaymentRequest(invoiceID.text, PaymentRequestV1TransactionCallBack);
+            Tegment.Transaction.PaymentRequest.GetPaymentRequest(invoiceID.text, PaymentRequestV1TransactionCallBack,true);
         }
 
         /// <summary>

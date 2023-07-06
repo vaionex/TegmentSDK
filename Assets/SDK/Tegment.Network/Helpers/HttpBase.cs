@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using Tegment.Logs;
+using System.Collections.Generic;
 
 namespace Tegment.Network
 {
@@ -15,6 +17,13 @@ namespace Tegment.Network
             var retries = 0;
             do
             {
+                if (TegmentClient.EnableLog)
+                {
+                    LogManager.WriteToLog("Request Method " + options.Method);
+                    LogManager.WriteToLog("Request Headers " + GetRequestHeaders());
+                    LogManager.WriteToLog("Request Params " + GetRequestParams());
+                    LogManager.WriteToLog("Request Body String" + options.Body);
+                }
                 using (var request = CreateRequest(options))
                 {
                     bool IsNetworkError;
@@ -41,8 +50,11 @@ namespace Tegment.Network
                         options.ProgressCallback(1);
                     }
                     var response = request.CreateWebResponse();
+                    if(TegmentClient.EnableLog)
+                        LogManager.WriteToLog("Response \n" + response.Text);
+
                     //if (request.IsValidRequest(options))
-                    if(request.result == UnityWebRequest.Result.Success)
+                    if (request.result == UnityWebRequest.Result.Success)
                     {
                         callback(null, response);
                         break;
@@ -68,7 +80,27 @@ namespace Tegment.Network
             }
             while (retries <= options.Retries);
         }
+        private static string GetRequestHeaders()
+        {
+            string strHeaders = "";
+            foreach (KeyValuePair<string, string> keyValue in TegmentClient.DefaultRequestHeaders)
+            {
+                strHeaders += keyValue.Key + "  ";
+                strHeaders += keyValue.Value + "\t"; ;
+            }
+            return strHeaders;
+        }
 
+        private static string GetRequestParams()
+        {
+            string strHeaders = "";
+            foreach (KeyValuePair<string, string> keyValue in TegmentClient.DefaultRequestParams)
+            {
+                strHeaders += keyValue.Key + "  ";
+                strHeaders += keyValue.Value + "\t"; ;
+            }
+            return strHeaders;
+        }
         private static UnityWebRequest CreateRequest(RequestHelper options)
         {
             var url = options.Uri.BuildUrl(options.Params);

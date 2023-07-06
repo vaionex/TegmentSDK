@@ -5,6 +5,7 @@ using Tegment.ResponseFormatter;
 using Tegment.Network;
 using UnityEngine;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Account
 {
@@ -16,8 +17,12 @@ namespace Tegment.Account
         /// </summary>
         /// <param name="_oauth"></param>
         /// <param name="callback"></param>
-        public static void GetUserInfo(string _oauth, System.Action<RequestException, ResponseHelper, UserInfoResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetUserInfo(string _oauth, System.Action<RequestException, ResponseHelper, UserInfoResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetUserInfo");
+
             UserInfoRequestFormatter userInfoRequestFormatter = new UserInfoRequestFormatter();
             userInfoRequestFormatter.oauth = _oauth;
 

@@ -5,6 +5,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -24,8 +25,11 @@ namespace Tegment.Transaction
         /// <param name="_sn"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void DropTransaction(string _secretKey, string _serviceId, string _privateKey, string _to, double _amount, string _notes, string _tokenId, int _sn, string _authToken, System.Action<RequestException, ResponseHelper, DropResponseFormatter> callback)
+        public static void DropTransaction(string _secretKey, string _serviceId, string _privateKey, string _to, double _amount, string _notes, string _tokenId, int _sn, string _authToken, System.Action<RequestException, ResponseHelper, DropResponseFormatter> callback,bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function DropTransaction");
+
             DropRequestFormatter dropRequestFormatter = new DropRequestFormatter();
             DropRequestDataArray dropRequestDataArray = new DropRequestDataArray();
             dropRequestDataArray.to = _to;

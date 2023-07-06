@@ -27,6 +27,22 @@ namespace Tegment.Network
             }
         }
 
+        public static bool _enableLog;
+
+        public static bool EnableLog
+        {
+            get
+            {
+                if (_enableLog)
+                {
+                    _enableLog = true;
+                }
+                return _enableLog;
+            }
+            set { _enableLog = value; }
+        }
+
+
         private static Dictionary<string, string> _defaultRequestParams;
         /// <summary>
         /// Default query string params.

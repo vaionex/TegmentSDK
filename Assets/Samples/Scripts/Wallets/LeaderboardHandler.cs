@@ -10,6 +10,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This class implements a sample to get token ownership details
     /// It returns all user data who have this particular token.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class LeaderboardHandler : MonoBehaviour
     {
@@ -29,7 +30,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void Leaderboard_Submit()
         {
             responseText.text = "";
-            Tegment.Wallet.Leaderboard.GetLeaderboard(nextPageToken.text, TokenID.text, TegmentSessionHandler.Instance._authToken, LeaderboardCallBack);
+            Tegment.Wallet.Leaderboard.GetLeaderboard(nextPageToken.text, TokenID.text, TegmentSessionHandler.Instance._authToken, LeaderboardCallBack,true);
         }
 
         /// <summary>

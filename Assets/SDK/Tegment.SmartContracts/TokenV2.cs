@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.SmartContracts
 {
@@ -13,16 +14,14 @@ namespace Tegment.SmartContracts
         /// Insert your STAS tokenId to receive information about it.
         /// </summary>
         /// <param name="_tokenID"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<TokenV2_ResponseFormatter> GetTokenV2(string _tokenID)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void GetTokenV2(string _tokenID, System.Action<RequestException, ResponseHelper, TokenV2_ResponseFormatter> callback, bool enableLog = false)
         {
-            APIResponseFormatter<TokenV2_ResponseFormatter> apiResponseFormatter = new APIResponseFormatter<TokenV2_ResponseFormatter>();
-            TegmentClient.Get<string>(PathConstants.baseURL + PathConstants.token_v2 + _tokenID).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<TokenV2_ResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<TokenV2_ResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetTokenV2");
+
+            TegmentClient.Get<TokenV2_ResponseFormatter>(PathConstants.baseURL + PathConstants.token_v2 + _tokenID, callback);
         }
     }
 }

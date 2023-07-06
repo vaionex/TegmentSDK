@@ -4,6 +4,7 @@ using Tegment.Network;
 using Tegment.ResponseFormatter;
 using UnityEngine;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Wallet
 {
@@ -16,8 +17,13 @@ namespace Tegment.Wallet
         /// </summary>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void GetWallets(string _authToken, System.Action<RequestException, ResponseHelper, WalletsResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetWallets(string _authToken, System.Action<RequestException, ResponseHelper, WalletsResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetWallets");
+
+
             TegmentClient.DefaultRequestHeaders["oauth"] = _authToken;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 

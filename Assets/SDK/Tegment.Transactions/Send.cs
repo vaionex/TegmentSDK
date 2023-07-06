@@ -5,6 +5,7 @@ using Tegment.ResponseFormatter;
 using UnityEngine;
 using Tegment.Utility;
 using Tegment.RequestFormatter;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -19,8 +20,12 @@ namespace Tegment.Transaction
         /// <param name="_amount"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void SendAmount(string _walletID, string _to, double _amount, string _authToken, System.Action<RequestException, ResponseHelper, SendResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void SendAmount(string _walletID, string _to, double _amount, string _authToken, System.Action<RequestException, ResponseHelper, SendResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function SendAmount");
+
             SendRequestFormatter sendRequestFormatter = new SendRequestFormatter();
             SendRequestDataArray sendRequestDataArray = new SendRequestDataArray();
             sendRequestDataArray.to = _to;

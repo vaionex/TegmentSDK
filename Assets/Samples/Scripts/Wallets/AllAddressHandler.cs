@@ -10,6 +10,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// this class implements sample to get All addresses from wallets
     /// Get a list of all wallet addresses that are currently available in your wallet.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class AllAddressHandler : MonoBehaviour
     {
@@ -26,7 +27,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void AllAddress_Submit()
         {
             responseText.text = "";
-            Tegment.Wallet.AllAddresses.GetAllAddress(walletID.text, TegmentSessionHandler.Instance._authToken, AllAddressCallBack);
+            Tegment.Wallet.AllAddresses.GetAllAddress(walletID.text, TegmentSessionHandler.Instance._authToken, AllAddressCallBack,true);
         }
 
         /// <summary>

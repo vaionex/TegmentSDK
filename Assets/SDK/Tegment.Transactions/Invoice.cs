@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -22,13 +23,18 @@ namespace Tegment.Transaction
         /// <param name="_paymentOptions"></param>
         /// <param name="_modeId"></param>
         /// <param name="_beneficiary"></param>
-        /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
         public static void CreateInvoice(string _type, double _amount,string _address, string _description,
             int _expirationTimeInMinuts, string _memo, string _merchantData, InvoiceRequestPaymentOptions[] _paymentOptions, string _modeId,
-            InvoiceRequestBenificiary _beneficiary, string _authToken, System.Action<RequestException, ResponseHelper, InvoiceResponseFormatter> callback)
-        {   
+            InvoiceRequestBenificiary _beneficiary, string _authToken, System.Action<RequestException, ResponseHelper, InvoiceResponseFormatter> callback, bool enableLog=false)
+        {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function CreateInvoice");
+
+
             InvoiceRequestFormatter invoiceRequestFormatter = new InvoiceRequestFormatter();
             invoiceRequestFormatter.type = _type;
             invoiceRequestFormatter.amount = _amount;

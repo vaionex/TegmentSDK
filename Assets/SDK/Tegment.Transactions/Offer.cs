@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -16,13 +17,18 @@ namespace Tegment.Transaction
         /// can also instead use wantedScript using a token script hex value instead of wantedTokenId and wantedSn
         /// </summary>
         /// <param name="_sn"></param>
+        /// <param name="_tokenId"></param>
         /// <param name="_amount"></param>
         /// <param name="_wantedAmount"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void OfferTransaction(int _sn, string _tokenId, double _amount, double _wantedAmount,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, OfferResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void OfferTransaction(int _sn, string _tokenId, double _amount, double _wantedAmount,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, OfferResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function OfferTransaction");
+
             OfferRequestFormatter offerRequestFormatter = new OfferRequestFormatter();
             OfferRequestDataArray offerRequestDataArray = new OfferRequestDataArray();
             offerRequestDataArray.sn = _sn;

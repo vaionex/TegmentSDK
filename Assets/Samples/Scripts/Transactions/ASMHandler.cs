@@ -9,6 +9,7 @@ namespace Tegment.Unity.Samples.Transactions
     /// <summary>
     /// This class implements a sample to upload custom ASM script in a transaction
     /// Thisallows custom scripts to be added as outputs in a transaction
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class ASMHandler : MonoBehaviour
     {
@@ -35,7 +36,7 @@ namespace Tegment.Unity.Samples.Transactions
                 amountVal = double.Parse(amount.text);
             }
 
-            Tegment.Transaction.ASM.CreateASM(serviceID.text,walletID.text,ASM.text,amountVal, TegmentSessionHandler.Instance._authToken, asmRequestCallBack);
+            Tegment.Transaction.ASM.CreateASM(serviceID.text,walletID.text,ASM.text,amountVal, TegmentSessionHandler.Instance._authToken, asmRequestCallBack,true);
         }
 
         /// <summary>

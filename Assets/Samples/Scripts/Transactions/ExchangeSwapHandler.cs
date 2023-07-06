@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// This class implements to allows users to accept a swap offers via swap ID
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class ExchangeSwapHandler : MonoBehaviour
     {
@@ -28,7 +29,7 @@ namespace Tegment.Unity.Samples.Transactions
         public void ExchangeSwapTransaction_Submit()
         {
             responseText.text = "";
-            Tegment.Transaction.ExchangeSwap.ExchangeSwapTransaction(SwapId.text, walletId.text, TegmentSessionHandler.Instance._authToken, ExchangeSwapTransactionCallBack);
+            Tegment.Transaction.ExchangeSwap.ExchangeSwapTransaction(SwapId.text, walletId.text, TegmentSessionHandler.Instance._authToken, ExchangeSwapTransactionCallBack,true);
         }
 
 

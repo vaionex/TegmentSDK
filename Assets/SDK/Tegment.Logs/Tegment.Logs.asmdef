@@ -1,9 +1,7 @@
 {
-    "name": "Tegment.Network",
-    "rootNamespace": "Tegment.Network",
-    "references": [
-        "GUID:3f9641adf8dc446339d2eca5dd50add7"
-    ],
+    "name": "Tegment.Log",
+    "rootNamespace": "Tegment.Logs",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

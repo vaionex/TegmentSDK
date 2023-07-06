@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -22,8 +23,12 @@ namespace Tegment.Transaction
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void ExchangeOfferTransaction(string _tokenId, int _sn, double _amount,string _type, ExchangeOfferRequestPayment[] _exchangeOfferPayment, string _walletID, string _authToken,System.Action<RequestException, ResponseHelper, ExchangeOfferResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void ExchangeOfferTransaction(string _tokenId, int _sn, double _amount,string _type, ExchangeOfferRequestPayment[] _exchangeOfferPayment, string _walletID, string _authToken,System.Action<RequestException, ResponseHelper, ExchangeOfferResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function ExchangeOfferTransaction");
+
             ExchangeOfferRequestFormatter exchangeOfferRequestFormatter = new ExchangeOfferRequestFormatter();
             ExchangeOfferRequestDataArray exchangeOfferRequestDataArray = new ExchangeOfferRequestDataArray();
             exchangeOfferRequestDataArray.tokenId = _tokenId;

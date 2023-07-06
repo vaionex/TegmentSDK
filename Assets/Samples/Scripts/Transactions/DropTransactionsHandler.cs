@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
     /// <summary>
     /// This class implements a sample to withdraw coins from private keys
     /// The drop Transaction allows users to transfer coins (BSV or Token) from a PrivateKey.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class DropTransactionsHandler : MonoBehaviour
     {
@@ -55,7 +56,7 @@ namespace Tegment.Unity.Samples.Transactions
                 snVal = int.Parse(sn.text);
             }
             responseText.text = "";
-            Tegment.Transaction.Drop.DropTransaction(secretKey.text,serviceId.text,privateKey.text, to.text, amountVal,notes.text,tokenId.text,snVal,TegmentSessionHandler.Instance._authToken, DropTransactionCallBack);
+            Tegment.Transaction.Drop.DropTransaction(secretKey.text,serviceId.text,privateKey.text, to.text, amountVal,notes.text,tokenId.text,snVal,TegmentSessionHandler.Instance._authToken, DropTransactionCallBack,true);
         }
         /// <summary>
         /// call back function to handle response

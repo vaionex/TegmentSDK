@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -18,8 +19,13 @@ namespace Tegment.Transaction
         /// <param name="_refundTo"></param>
         /// <param name="_memo"></param>
         /// <param name="callback"></param>
-        public static void SettleInvoice(string _invoiceId, string _merchantData, string _transaction, string _refundTo, string _memo, System.Action<RequestException, ResponseHelper, PaymentRequestPayResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void SettleInvoice(string _invoiceId, string _merchantData, string _transaction, string _refundTo, string _memo, System.Action<RequestException, ResponseHelper, PaymentRequestPayResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function SettleInvoice");
+
+
             PaymentRequestPayRequestFormatter paymentRequestPayRequestFormatter = new PaymentRequestPayRequestFormatter();
             paymentRequestPayRequestFormatter.merchantData = _merchantData;
             paymentRequestPayRequestFormatter.transaction = _transaction;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tegment.Logs;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -19,8 +20,12 @@ namespace Tegment.Transaction
         /// <param name="_amount"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void RawTransaction(string _walletID, string _to, double _amount, string _authToken, System.Action<RequestException, ResponseHelper, RawTxResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void RawTransaction(string _walletID, string _to, double _amount, string _authToken, System.Action<RequestException, ResponseHelper, RawTxResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function RawTransaction");
+
             RawTXRequestFormatter rawTXRequestFormatter = new RawTXRequestFormatter();
             RawTXRequestDataArray rawTXRequestDataArray = new RawTXRequestDataArray();
             rawTXRequestDataArray.to = _to;

@@ -4,6 +4,7 @@ using Tegment.Network;
 using Tegment.ResponseFormatter;
 using UnityEngine;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Wallet
 {
@@ -19,8 +20,12 @@ namespace Tegment.Wallet
         /// <param name="_type"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void GetHistory(string _nextPageToken, string _tokenId, string _walletID, string _type, string _authToken, System.Action<RequestException, ResponseHelper, HistoryResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetHistory(string _nextPageToken, string _tokenId, string _walletID, string _type, string _authToken, System.Action<RequestException, ResponseHelper, HistoryResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetHistory");
+
             if (!string.IsNullOrEmpty(_nextPageToken))
             {
                 TegmentClient.DefaultRequestParams["nextPageToken"] = _nextPageToken;

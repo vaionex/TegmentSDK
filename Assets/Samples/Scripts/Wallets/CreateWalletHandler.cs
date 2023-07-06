@@ -11,6 +11,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This class implements a sample to create wallet
     /// Sample create a HD wallet of choice in your user account. You can select between standard, secure, escrow and shared wallets.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class CreateWalletHandler : MonoBehaviour
     {
@@ -42,7 +43,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void CreateWallet_Submit()
         {
            responseText.text = "";
-           Tegment.Wallet.CreateWallet.CreateWalletAccount(walletTitle.text, walletActivate.isOn, TegmentSessionHandler.Instance._authToken, CreateWalletCallBack, mnemonicPhrase.text, paymail.text, _type.text, walletLogo.text);
+           Tegment.Wallet.CreateWallet.CreateWalletAccount(walletTitle.text, walletActivate.isOn, TegmentSessionHandler.Instance._authToken, CreateWalletCallBack, mnemonicPhrase.text, paymail.text, _type.text, walletLogo.text,true);
         }
         /// <summary>
         /// callback handler for response

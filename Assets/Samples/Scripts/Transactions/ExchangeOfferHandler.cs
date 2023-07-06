@@ -11,6 +11,7 @@ namespace Tegment.Unity.Samples.Transactions
     /// This class implements sample to allows user to create a swap offer object that can be used for the exchange class.
     /// The amount value is the value in satoshis wanted in exchange for the token.
     /// Payment field is to add in extra outputs if requested with amount in satoshis and to for address string.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class ExchangeOfferHandler : MonoBehaviour
     {
@@ -66,7 +67,7 @@ namespace Tegment.Unity.Samples.Transactions
             exchangeOfferRequestPayments_array[0] = exchangeOfferRequestPayment;
 
             responseText.text = "";
-            Tegment.Transaction.ExchangeOffer.ExchangeOfferTransaction(tokenId.text,snVal,amountVal,type.text,exchangeOfferRequestPayments_array, walletId.text,TegmentSessionHandler.Instance._authToken, ExchangeOfferTransactionCallBack);
+            Tegment.Transaction.ExchangeOffer.ExchangeOfferTransaction(tokenId.text,snVal,amountVal,type.text,exchangeOfferRequestPayments_array, walletId.text,TegmentSessionHandler.Instance._authToken, ExchangeOfferTransactionCallBack,true);
         }
 
         /// <summary>

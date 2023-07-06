@@ -3,6 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -16,8 +17,12 @@ namespace Tegment.Transaction
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void ExchangeSwapTransaction(string _swapID,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, ExchangeSwapResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void ExchangeSwapTransaction(string _swapID,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, ExchangeSwapResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function ExchangeSwapTransaction");
+
             ExchangeSwapRequestFormatter exchangeSwapRequestFormatter = new ExchangeSwapRequestFormatter();
             ExchangeSwapRequestDataArray exchangeSwapRequestDataArray = new ExchangeSwapRequestDataArray();
             exchangeSwapRequestDataArray.swapId = _swapID;

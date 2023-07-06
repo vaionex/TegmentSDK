@@ -10,6 +10,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This class implements a sample to get your Mnemonic Phrase
     /// The mnemonic phrase secures your wallet keys. Each mnemonic acts as seed of a HDPrivatekey that itself contains hundrets of PrivateKeys.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class MnemonicHandler : MonoBehaviour
     {
@@ -26,7 +27,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void Mnemonic_Submit()
         {
             responseText.text = "";
-            Tegment.Wallet.Mnemonic.GetMnemonic(walletID.text, TegmentSessionHandler.Instance._authToken, MnemonicCallBack);
+            Tegment.Wallet.Mnemonic.GetMnemonic(walletID.text, TegmentSessionHandler.Instance._authToken, MnemonicCallBack,true);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using Tegment.ResponseFormatter;
 
 /// <summary>
 /// This class is used to create the signup request on Tegment SDK for sample
+/// To disable logging, set the last param to false on SDK call
 /// </summary>
 namespace Tegment.Unity.Samples.Account
 {
@@ -29,7 +30,7 @@ namespace Tegment.Unity.Samples.Account
         /// </summary>
         public void SignUp()
         {
-            Tegment.Account.SignUP.SignUPAccount(email.text, password.text, SignUpCallBack);
+            Tegment.Account.SignUP.SignUPAccount(email.text, password.text, SignUpCallBack,true);
         }
         /// <summary>
         /// Callback for the request Sent to SDK to handle the response

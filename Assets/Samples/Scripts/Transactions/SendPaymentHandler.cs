@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
     /// <summary>
     /// This class implements a sample to transfer coins to an address
     /// Use this sample to create transactions to peers. this is agnostic to sending either Tokens or BSV.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class SendPaymentHandler : MonoBehaviour
     {
@@ -35,7 +36,7 @@ namespace Tegment.Unity.Samples.Transactions
                 amountVal = double.Parse(amount.text);
             }
             responseText.text = "";
-            Tegment.Transaction.Send.SendAmount(walletId.text, To.text,amountVal, TegmentSessionHandler.Instance._authToken, SendPaymentCallBack);
+            Tegment.Transaction.Send.SendAmount(walletId.text, To.text,amountVal, TegmentSessionHandler.Instance._authToken, SendPaymentCallBack,true);
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
-
+using Tegment.Logs;
 
 namespace Tegment.Transaction
 {
@@ -15,9 +15,11 @@ namespace Tegment.Transaction
         /// </summary>
         /// <param name="_invoiceId"></param>
         /// <param name="callback"></param>
-        /// <returns></returns>
-        public static void GetPaymentRequest(string _invoiceId, System.Action<RequestException, ResponseHelper, PaymentRequestResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void GetPaymentRequest(string _invoiceId, System.Action<RequestException, ResponseHelper, PaymentRequestResponseFormatter> callback, bool enableLog = false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetPaymentRequest");
 
             TegmentClient.Get<PaymentRequestResponseFormatter>(PathConstants.baseURL + PathConstants.paymentRequest + _invoiceId, callback);
         }

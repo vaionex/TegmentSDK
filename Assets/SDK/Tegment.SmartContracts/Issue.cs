@@ -3,7 +3,7 @@ using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
-
+using Tegment.Logs;
 
 namespace Tegment.SmartContracts
 {
@@ -41,13 +41,18 @@ namespace Tegment.SmartContracts
         /// <param name="_reminting"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<IssueResponseFormatter> MintIssue(string _name, string _protocolId, string _symbol,
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void MintIssue(string _name, string _protocolId, string _symbol,
             string _description, string _image, int _tokenSupply, int _decimals, int _satsPerToken, string _terms, string _licenceId,
             string _organisation, string _legalForm, string _governingLaw, string _issuerCountry, string _jurisdiction, string _email,
             string _schemaId, string _website, string _legalTerms,string _URI, string _type,string _altURI, bool _splitable, object _data,
-            string _protocol, bool _reminting, string _walletID, string _authToken)
+            string _protocol, bool _reminting, string _walletID, string _authToken,
+            System.Action<RequestException, ResponseHelper, IssueResponseFormatter> callback, bool enableLog = false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function MintIssue");
+
 
             //Add Request Class Data
             IssueRequestFormatter issueRequestFormatter = new IssueRequestFormatter();
@@ -110,13 +115,7 @@ namespace Tegment.SmartContracts
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
 
-            APIResponseFormatter<IssueResponseFormatter> apiResponseFormatter = new APIResponseFormatter<IssueResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.issue, issueRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<IssueResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<IssueResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            TegmentClient.Post<IssueResponseFormatter>(PathConstants.baseURL + PathConstants.issue, issueRequestFormatter, callback);
         }
     }
 }

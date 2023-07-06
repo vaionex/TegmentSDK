@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// This class implement sample that allows users to inspect an atomic swap hex to verify the validity of the offer.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class InspectTransactionHandler : MonoBehaviour
     {
@@ -24,7 +25,7 @@ namespace Tegment.Unity.Samples.Transactions
         public void InspectTransaction_Submit()
         {
             responseText.text = "";
-            Tegment.Transaction.Inspect.InspectTransaction(swapHex.text, TegmentSessionHandler.Instance._authToken, InspectTransactionCallBack);
+            Tegment.Transaction.Inspect.InspectTransaction(swapHex.text, TegmentSessionHandler.Instance._authToken, InspectTransactionCallBack,true);
         }
 
         /// <summary>

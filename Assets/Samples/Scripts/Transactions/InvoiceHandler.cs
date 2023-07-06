@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// this class implements a sample that create an invoice to receive payments for a merchant product.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class InvoiceHandler : MonoBehaviour
     {
@@ -115,7 +116,7 @@ namespace Tegment.Unity.Samples.Transactions
 
 
             Tegment.Transaction.Invoice.CreateInvoice(Type.text, amountVal, Address.text, Description.text, expirationTimeVal, Memo.text, MerchantData.text, invoiceRequestPaymentOptionsArray, ModeID.text, invoiceRequestBenificiary,
-                  TegmentSessionHandler.Instance._authToken, InvoiceTransactionCallBack);
+                  TegmentSessionHandler.Instance._authToken, InvoiceTransactionCallBack,true);
         }
 
         /// <summary>

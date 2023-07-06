@@ -9,6 +9,7 @@ namespace Tegment.Unity.Samples.Transactions
 {
     /// <summary>
     /// The class implements sample that enables users to pay their invoices that were earlier resolved and put into a standardized format.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class PayHandler : MonoBehaviour
     {
@@ -120,7 +121,7 @@ namespace Tegment.Unity.Samples.Transactions
 
             Tegment.Transaction.Pay.PayTransaction(URI.text, _type.text, mainProtocol.text, payOutputRequestArray, payInputRequestsArray, network.text,
                 paymentUrl.text, creationTimeVal, expirationTimeVal, memo.text, isBSV.isOn.ToString().ToLower(),
-                peer.text, peerData.text, peerProtocol.text, walletID.text, TegmentSessionHandler.Instance._authToken, PayTransactionCallBack);
+                peer.text, peerData.text, peerProtocol.text, walletID.text, TegmentSessionHandler.Instance._authToken, PayTransactionCallBack,true);
         }
 
         /// <summary>

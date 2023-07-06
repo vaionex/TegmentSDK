@@ -11,6 +11,7 @@ namespace Tegment.Unity.Samples.Wallets
     /// <summary>
     /// This class implements a sample to get your History of transactions
     /// It returns all past transactions, both BSV and Tokens.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class HistoryHandler : MonoBehaviour
     {
@@ -38,7 +39,7 @@ namespace Tegment.Unity.Samples.Wallets
         public void History_Submit()
         {
             responseText.text = "";
-            Tegment.Wallet.History.GetHistory(nextPageToken.text,tokenID.text, walletID.text, _type.text, TegmentSessionHandler.Instance._authToken, HistoryCallBack);
+            Tegment.Wallet.History.GetHistory(nextPageToken.text,tokenID.text, walletID.text, _type.text, TegmentSessionHandler.Instance._authToken, HistoryCallBack,true);
         }
 
         /// <summary>

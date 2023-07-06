@@ -7,6 +7,7 @@ using Tegment.Network;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Wallet
 {
@@ -17,15 +18,19 @@ namespace Tegment.Wallet
         /// Create a HD wallet of choice in your user account. You can select between standard, secure, escrow and shared wallets.
         /// </summary>
         /// <param name="_walletTitle"></param>
-        /// <param name="_mnemonicPhrase"></param>
-        /// <param name="paymail"></param>
         /// <param name="_paymailActivate"></param>
-        /// <param name="_type"></param>
-        /// <param name="_walletLogo"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
-        public static void CreateWalletAccount(string _walletTitle, bool _paymailActivate, string _authToken, System.Action<RequestException, ResponseHelper, CreateWalletResponseFormatter> callback, string _mnemonicPhrase = null, string _paymail = null, string _type = null, string _walletLogo = null)
+        /// <param name="_mnemonicPhrase"></param>
+        /// <param name="_paymail"></param>
+        /// <param name="_type"></param>
+        /// <param name="_walletLogo"></param>
+        /// <param name="enableLog"></param>
+        public static void CreateWalletAccount(string _walletTitle, bool _paymailActivate, string _authToken, System.Action<RequestException, ResponseHelper, CreateWalletResponseFormatter> callback, string _mnemonicPhrase = null, string _paymail = null, string _type = null, string _walletLogo = null, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function CreateWalletAccount");
+
             TegmentClient.DefaultRequestHeaders["walletTitle"] = _walletTitle;
             if (!string.IsNullOrEmpty(_mnemonicPhrase))
             {

@@ -7,6 +7,7 @@ using Tegment.Network;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor;
 using Tegment.Utility;
+using Tegment.Logs;
 
 namespace Tegment.Account
 {
@@ -19,8 +20,12 @@ namespace Tegment.Account
         /// <param name="_email"></param>
         /// <param name="_password"></param>
         /// <param name="callback"></param>
-        public static void SignUPAccount(string _email, string _password, System.Action<RequestException, ResponseHelper, SignUpResponseFormatter> callback)
+        /// <param name="enableLog"></param>
+        public static void SignUPAccount(string _email, string _password, System.Action<RequestException, ResponseHelper, SignUpResponseFormatter> callback, bool enableLog=false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function SignUPAccount");
+
             SignUpRequestFormatter signUpRequestFormatter = new SignUpRequestFormatter();
             signUpRequestFormatter.email = _email;
             signUpRequestFormatter.password = _password;

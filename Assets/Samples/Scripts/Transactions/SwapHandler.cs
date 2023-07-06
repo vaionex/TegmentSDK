@@ -8,6 +8,7 @@ namespace Tegment.Unity.Samples.Transactions
     /// <summary>
     /// This class implements a sample Accepting atomic swap offers
     /// This transaction allows users to accept swap offers by passing respective hex value.
+    /// To disable logging, set the last param to false on SDK call
     /// </summary>
     public class SwapHandler : MonoBehaviour
     {
@@ -27,7 +28,7 @@ namespace Tegment.Unity.Samples.Transactions
         public void SwapTransaction_Submit()
         {
             responseText.text = "";
-            Tegment.Transaction.Swap.SwapTransaction(SwapHex.text,walletId.text,TegmentSessionHandler.Instance._authToken, SwapTransactionCallBack);
+            Tegment.Transaction.Swap.SwapTransaction(SwapHex.text,walletId.text,TegmentSessionHandler.Instance._authToken, SwapTransactionCallBack,true);
         }
 
         /// <summary>
