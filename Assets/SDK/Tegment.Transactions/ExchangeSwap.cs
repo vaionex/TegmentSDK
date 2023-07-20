@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -30,13 +29,15 @@ namespace Tegment.Transaction
             exchangeSwapRequestFormatter.dataArray = new ExchangeSwapRequestDataArray[1];
             exchangeSwapRequestFormatter.dataArray[0] = exchangeSwapRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
 
-
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.exchangeSwap, exchangeSwapRequestFormatter);
+            string path = PathConstants.baseURL + PathConstants.exchangeSwap;
+            TegmentClient.Post<ExchangeSwapResponseFormatter>(path, exchangeSwapRequestFormatter, callback);
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
-
+// Reponse checked
+//There might be issue in coinsData class -> balance field, need to discuss
+// Discussion point, only one field in array contains balance property, why others won't have this
 namespace Tegment.ResponseFormatter {
     [Serializable]
     public class BalanceResponseFormatter

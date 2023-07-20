@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -47,9 +46,11 @@ namespace Tegment.Transaction
             invoiceRequestFormatter.modeId = _modeId;
             invoiceRequestFormatter.beneficiary = _beneficiary;
 
+            TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Post<InvoiceResponseFormatter>(PathConstants.baseURL + PathConstants.invoice, invoiceRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.invoice;
+            TegmentClient.Post<InvoiceResponseFormatter>(path, invoiceRequestFormatter, callback);
         }
     }
 }

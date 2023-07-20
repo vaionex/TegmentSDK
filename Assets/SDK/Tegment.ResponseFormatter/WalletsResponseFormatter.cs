@@ -1,5 +1,5 @@
 using System;
-
+//Response checked
 namespace Tegment.ResponseFormatter
 {
     [Serializable]

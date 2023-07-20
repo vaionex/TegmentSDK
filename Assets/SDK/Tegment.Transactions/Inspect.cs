@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -29,9 +28,11 @@ namespace Tegment.Transaction
             inspectRequestFormatter.dataArray = new InspectRequestDataArray[1];
             inspectRequestFormatter.dataArray[0] = inspectRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Post<InspectResponseFormatter>(PathConstants.baseURL + PathConstants.inspect, inspectRequestFormatter,callback);
+            string path = PathConstants.baseURL + PathConstants.inspect;
+            TegmentClient.Post<InspectResponseFormatter>(path, inspectRequestFormatter,callback);
         }
     }
 }

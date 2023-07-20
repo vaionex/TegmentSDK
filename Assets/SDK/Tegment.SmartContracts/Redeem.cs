@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -35,13 +34,15 @@ namespace Tegment.SmartContracts
             redeemRequestFormatter.dataArray[0] = redeemRequestDataArray;
             //Request Class Data added
             //
+            //Logging
+            TegmentClient.EnableLog = enableLog;
             //Now Add headers
            
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-
-            TegmentClient.Post<RedeemResponseFormatter>(PathConstants.baseURL + PathConstants.redeem, redeemRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.redeem;
+            TegmentClient.Post<RedeemResponseFormatter>(path, redeemRequestFormatter, callback);
         }
     }
 }

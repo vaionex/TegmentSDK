@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -32,7 +31,10 @@ namespace Tegment.Transaction
             paymentRequestPayRequestFormatter.refundTo = _refundTo;
             paymentRequestPayRequestFormatter.memo = _memo;
 
-            TegmentClient.Post<PaymentRequestPayResponseFormatter>(PathConstants.baseURL + PathConstants.paymentRequest_Pay + _invoiceId, paymentRequestPayRequestFormatter, callback);
+            TegmentClient.EnableLog = enableLog;
+
+            string path = PathConstants.baseURL + PathConstants.paymentRequest_Pay.Replace("{invoiceId}",_invoiceId);
+            TegmentClient.Post<PaymentRequestPayResponseFormatter>(path, paymentRequestPayRequestFormatter, callback);
         }
     }
 }

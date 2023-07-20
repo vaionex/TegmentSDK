@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -23,11 +20,14 @@ namespace Tegment.Wallet
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetWallets");
 
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["oauth"] = _authToken;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Get<WalletsResponseFormatter>(PathConstants.baseURL + PathConstants.wallets, callback);
+
+            string path = PathConstants.baseURL + PathConstants.wallets;
+            TegmentClient.Get<WalletsResponseFormatter>(path, callback);
         }
     }
 }

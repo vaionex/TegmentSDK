@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -26,6 +23,8 @@ namespace Tegment.Wallet
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetHistory");
 
+            TegmentClient.EnableLog = enableLog;
+
             if (!string.IsNullOrEmpty(_nextPageToken))
             {
                 TegmentClient.DefaultRequestParams["nextPageToken"] = _nextPageToken;
@@ -39,9 +38,11 @@ namespace Tegment.Wallet
             {
                 TegmentClient.DefaultRequestHeaders["type"] = _type;
             }
+
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Get<HistoryResponseFormatter>(PathConstants.baseURL + PathConstants.history,callback);
+            string path = PathConstants.baseURL + PathConstants.history;
+            TegmentClient.Get<HistoryResponseFormatter>(path,callback);
         }
     }
 }

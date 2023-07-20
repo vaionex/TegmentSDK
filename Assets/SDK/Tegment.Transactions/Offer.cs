@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -39,11 +38,12 @@ namespace Tegment.Transaction
             offerRequestFormatter.dataArray = new OfferRequestDataArray[1];
             offerRequestFormatter.dataArray[0] = offerRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
 
-
-            TegmentClient.Post<OfferResponseFormatter>(PathConstants.baseURL + PathConstants.offer, offerRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.offer;
+            TegmentClient.Post<OfferResponseFormatter>(path, offerRequestFormatter, callback);
         }
     }
 }

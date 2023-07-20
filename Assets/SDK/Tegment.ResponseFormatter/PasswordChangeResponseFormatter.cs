@@ -13,6 +13,7 @@ namespace Tegment.ResponseFormatter
     {
         public string status;
         public string msg;
-        public string email;
+        public string token;
+        public string userId;
     }
 }

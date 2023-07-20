@@ -12,7 +12,6 @@ namespace Tegment.ResponseFormatter
     public class ResetPasswordResponseData { 
         public string status;
         public string msg;
-        public string token;
-        public string userId;
+        public string email;
     }
 }

@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.ResponseFormatter;
 using Tegment.RequestFormatter;
 using Tegment.Network;
@@ -24,10 +23,13 @@ namespace Tegment.Account
             ResetPasswordRequestFormatter resetPasswordRequestFormatter = new ResetPasswordRequestFormatter();
             resetPasswordRequestFormatter.email = _email;
 
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
-            TegmentClient.Post<ResetPasswordResponseFormatter>(PathConstants.baseURL + PathConstants.passwordReset, resetPasswordRequestFormatter,callback);
+
+            string path = PathConstants.baseURL + PathConstants.passwordReset;
+            TegmentClient.Post<ResetPasswordResponseFormatter>(path, resetPasswordRequestFormatter,callback);
         }
     }
 }

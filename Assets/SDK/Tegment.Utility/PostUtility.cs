@@ -1,7 +1,8 @@
-using UnityEngine;
-using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
+using Tegment.Network;
+using Tegment.Logs;
+
 
 namespace Tegment.Utility
 {
@@ -15,27 +16,29 @@ namespace Tegment.Utility
         /// <param name="_customToken"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<PostUploadResponseFormatter> PostUpload(string[] _notesData, string _customToken,string _walletID, string _authToken)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void PostUtil(string[] _notesData, string _customToken,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, PostUploadResponseFormatter> callback, bool enableLog = false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function PostUpload");
+
             PostUploadRequestFormatter postUploadRequestFormatter = new PostUploadRequestFormatter();
             PostUploadRequestData postUploadRequestData = new PostUploadRequestData();
             postUploadRequestData.notes = _notesData;
 
-            postUploadRequestFormatter.data = new PostUploadRequestData[1];
-            postUploadRequestFormatter.data[0] = postUploadRequestData;
+            postUploadRequestFormatter.dataArray = new PostUploadRequestData[1];
+            postUploadRequestFormatter.dataArray[0] = postUploadRequestData;
+
+
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["custom-token"] = _customToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            APIResponseFormatter<PostUploadResponseFormatter> apiResponseFormatter = new APIResponseFormatter<PostUploadResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.post, postUploadRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<PostUploadResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<PostUploadResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            string path = PathConstants.baseURL + PathConstants.post;
+            TegmentClient.Post<PostUploadResponseFormatter>(path, postUploadRequestFormatter, callback);
         }
     }
 }

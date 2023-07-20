@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -29,11 +28,14 @@ namespace Tegment.Transaction
             aSMRequestDataArray.asm = _asm;
             aSMRequestDataArray.amount = _amount;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["serviceId"] = _serviceId;
             TegmentClient.DefaultRequestHeaders["walletId"] = _walletId;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Post<ASMResponseFormatter>(PathConstants.baseURL + PathConstants.asm, asmRequestFormatter);
+            string path = PathConstants.baseURL + PathConstants.asm;
+            TegmentClient.Post<ASMResponseFormatter>(path, asmRequestFormatter);
         }
     }
 }

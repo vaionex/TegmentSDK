@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -24,6 +21,8 @@ namespace Tegment.Wallet
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetLeaderboard");
 
+            TegmentClient.EnableLog = enableLog;
+
             if (!string.IsNullOrEmpty(_nextPageToken))
             {
                 TegmentClient.DefaultRequestParams["nextPageToken"] = _nextPageToken;
@@ -32,7 +31,8 @@ namespace Tegment.Wallet
             TegmentClient.DefaultRequestHeaders["tokenId"] = _tokenId;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Get<LeaderboardResponseFormatter>(PathConstants.baseURL + PathConstants.leaderboard, callback);
+            string path = PathConstants.baseURL + PathConstants.leaderboard;
+            TegmentClient.Get<LeaderboardResponseFormatter>(path, callback);
         }
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.RequestFormatter;
 using Tegment.Logs;
@@ -21,22 +18,22 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void SendAmount(string _walletID, string _to, double _amount, string _authToken, System.Action<RequestException, ResponseHelper, SendResponseFormatter> callback, bool enableLog=false)
+        public static void SendAmount(string _walletID, SendRequestDataArray[] dataArray, string _authToken, System.Action<RequestException, ResponseHelper, SendResponseFormatter> callback, bool enableLog=false)
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function SendAmount");
 
             SendRequestFormatter sendRequestFormatter = new SendRequestFormatter();
-            SendRequestDataArray sendRequestDataArray = new SendRequestDataArray();
-            sendRequestDataArray.to = _to;
-            sendRequestDataArray.amount = _amount;
-            sendRequestFormatter.dataArray = new SendRequestDataArray[1];
-            sendRequestFormatter.dataArray[0] = sendRequestDataArray;
+            sendRequestFormatter.dataArray = new SendRequestDataArray[dataArray.Length];
+            sendRequestFormatter.dataArray = dataArray;
+
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
 
-            TegmentClient.Post<SendResponseFormatter>(PathConstants.baseURL + PathConstants.send, sendRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.send;
+            TegmentClient.Post<SendResponseFormatter>(path, sendRequestFormatter, callback);
         }
     }
 }

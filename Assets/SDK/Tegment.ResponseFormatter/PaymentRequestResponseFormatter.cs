@@ -6,24 +6,19 @@ namespace Tegment.ResponseFormatter
     public class PaymentRequestResponseFormatter
     {
         public int statuscode;
-        public PaymentRequestResponseData data;
-    }
-    [Serializable]
-    public class PaymentRequestResponseData
-    {
         public string status;
         public string msg;
-        public string merchantData;
-        public string version;
-        public int expirationTimestamp;
-        public string network;
-        public PaymentRequestResponseOutputs[] outputs;
-        public int creationTimestamp;
-        public string uri;
         public string mainProtocol;
-        public string type;
-        public string paymentUrl;
+        public string merchantData;
+        public int expirationTimestamp;
         public string memo;
+        public PaymentRequestResponseOutputs[] outputs;
+        public string version;
+        public string uri;
+        public int creationTimestamp;
+        public string type;
+        public string network;
+        public string paymentUrl;
     }
     [Serializable]
     public class PaymentRequestResponseOutputs
@@ -33,3 +28,4 @@ namespace Tegment.ResponseFormatter
         public int satoshis;
     }
 }
+

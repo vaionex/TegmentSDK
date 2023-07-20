@@ -1,6 +1,4 @@
-using UnityEngine;
 using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
 using Tegment.Logs;
@@ -21,7 +19,11 @@ namespace Tegment.SmartContracts
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetTokenV2");
 
-            TegmentClient.Get<TokenV2_ResponseFormatter>(PathConstants.baseURL + PathConstants.token_v2 + _tokenID, callback);
+
+            TegmentClient.EnableLog = enableLog;
+            
+            string path = PathConstants.baseURL + PathConstants.token_v2.Replace("{id}", _tokenID);
+            TegmentClient.Get<TokenV2_ResponseFormatter>(path, callback);
         }
     }
 }

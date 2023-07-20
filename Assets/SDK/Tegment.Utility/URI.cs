@@ -1,7 +1,7 @@
-using UnityEngine;
-using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
+using Tegment.Network;
+using Tegment.Logs;
 
 
 namespace Tegment.Utility
@@ -13,17 +13,20 @@ namespace Tegment.Utility
         /// The URI function helps to resolve addresses, paymails and invoices and puts them into a standardized response format.
         /// </summary>
         /// <param name="_URI"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<URIResponseFormatter> GETURI(string _URI)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void GETURI(string _URI, System.Action<RequestException, ResponseHelper, URIResponseFormatter> callback, bool enableLog = false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GETURI");
+
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["uri"] = _URI;
-            APIResponseFormatter<URIResponseFormatter> apiResponseFormatter = new APIResponseFormatter<URIResponseFormatter>();
-            TegmentClient.Get<string>(PathConstants.baseURL + PathConstants.URI).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<URIResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<URIResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+
+            string path = PathConstants.baseURL + PathConstants.URI;
+            TegmentClient.Get<URIResponseFormatter>(path,callback);
+
         }
     }
 }

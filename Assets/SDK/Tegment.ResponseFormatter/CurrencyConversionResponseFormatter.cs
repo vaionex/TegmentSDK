@@ -6,6 +6,7 @@ namespace Tegment.ResponseFormatter
     public class CurrencyConversionResponseFormatter
     {
         public int statusCode;
+        public CurrencyConversionResponseData data;
     }
     [Serializable]
     public class CurrencyConversionResponseData

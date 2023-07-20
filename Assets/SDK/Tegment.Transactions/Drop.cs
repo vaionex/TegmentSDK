@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -40,6 +37,8 @@ namespace Tegment.Transaction
             dropRequestFormatter.dataArray = new DropRequestDataArray[1];
             dropRequestFormatter.dataArray[0] = dropRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
+
             if (!string.IsNullOrEmpty(_secretKey))
             {
                 TegmentClient.DefaultRequestHeaders["secretKey"] = _secretKey;
@@ -57,7 +56,8 @@ namespace Tegment.Transaction
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
 
-            TegmentClient.Post<DropResponseFormatter>(PathConstants.baseURL + PathConstants.drop, dropRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.drop;
+            TegmentClient.Post<DropResponseFormatter>(path, dropRequestFormatter, callback);
         }
     }
 }

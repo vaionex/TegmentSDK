@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
 
 namespace Tegment.Unity.Samples.Transactions
 {
@@ -35,8 +36,11 @@ namespace Tegment.Unity.Samples.Transactions
             {
                 amountVal = double.Parse(amount.text);
             }
+            SendRequestDataArray[] sendRequestDataArray = new SendRequestDataArray[1];
+            sendRequestDataArray[0].to = To.text;
+            sendRequestDataArray[0].amount = amountVal;
             responseText.text = "";
-            Tegment.Transaction.Send.SendAmount(walletId.text, To.text,amountVal, TegmentSessionHandler.Instance._authToken, SendPaymentCallBack,true);
+            Tegment.Transaction.Send.SendAmount(walletId.text, sendRequestDataArray, TegmentSessionHandler.Instance._authToken, SendPaymentCallBack,true);
         }
 
         /// <summary>

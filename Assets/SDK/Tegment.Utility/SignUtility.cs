@@ -1,7 +1,7 @@
-using UnityEngine;
-using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
+using Tegment.Network;
+using Tegment.Logs;
 
 namespace Tegment.Utility
 {
@@ -16,9 +16,13 @@ namespace Tegment.Utility
         /// <param name="_message"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<SignUtilityResponseFormatter> SignMessage(string _address, string _derivationPath, string _message, string _walletID, string _authToken)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void SignMessage(string _address, string _derivationPath, string _message, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, SignUtilityResponseFormatter> callback, bool enableLog = false)
         {
+            if (enableLog)
+                LogManager.WriteToLog("Request Function SignMessage");
+
             SignUtilityRequestFormatter signUtilityRequestFormatter = new SignUtilityRequestFormatter();
 
             SignUtilityRequestDataArray signUtilityRequestDataArray = new SignUtilityRequestDataArray();
@@ -29,18 +33,14 @@ namespace Tegment.Utility
             signUtilityRequestFormatter.dataArray = new SignUtilityRequestDataArray[1];
             signUtilityRequestFormatter.dataArray[0] = signUtilityRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            APIResponseFormatter<SignUtilityResponseFormatter> apiResponseFormatter = new APIResponseFormatter<SignUtilityResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.sign, signUtilityRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<SignUtilityResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<SignUtilityResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            string path = PathConstants.baseURL + PathConstants.sign;
+            TegmentClient.Post<SignUtilityResponseFormatter>(path, signUtilityRequestFormatter, callback);
         }
-
     }
 }
 

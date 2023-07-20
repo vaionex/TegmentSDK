@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -55,10 +52,12 @@ namespace Tegment.Wallet
                 TegmentClient.DefaultRequestHeaders["maxResults"] = _maxResults.ToString();
             }
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-
-            TegmentClient.Get<BalanceResponseFormatter>(PathConstants.baseURL + PathConstants.balance, callback);
+            string path = PathConstants.baseURL + PathConstants.balance;
+            TegmentClient.Get<BalanceResponseFormatter>(path, callback);
         }
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.Network;
 using Tegment.ResponseFormatter;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -23,11 +20,13 @@ namespace Tegment.Wallet
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetMnemonic");
 
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Get<MnemonicResponseFormatter>(PathConstants.baseURL + PathConstants.mnemonic, callback);
+            string path = PathConstants.baseURL + PathConstants.mnemonic;
+            TegmentClient.Get<MnemonicResponseFormatter>(path, callback);
         }
     }
 }

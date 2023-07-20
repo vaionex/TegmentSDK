@@ -22,9 +22,11 @@ public class ListViewManager : MonoBehaviour
     [SerializeField]
     private Button btnNotifications;
     [SerializeField]
+    private Button btnDelete;
+   /* [SerializeField]
     private Button btnAdministration;
     [SerializeField]
-    private Button btnQuota;
+    private Button btnQuota;*/
 
    
     public List<GridDataItem> identity = new List<GridDataItem>();
@@ -48,10 +50,13 @@ public class ListViewManager : MonoBehaviour
     private List<GridDataItem> notifications = new List<GridDataItem>();
 
     [SerializeField]
+    private List<GridDataItem> delete = new List<GridDataItem>();
+
+    /*[SerializeField]
     private List<GridDataItem> administration = new List<GridDataItem>();
 
     [SerializeField]
-    private List<GridDataItem> quota = new List<GridDataItem>();
+    private List<GridDataItem> quota = new List<GridDataItem>();*/
 
 
     void Start()
@@ -63,8 +68,9 @@ public class ListViewManager : MonoBehaviour
         btnUtility.onClick.AddListener(() => Utility_Click());
         btnPaymail.onClick.AddListener(() => Paymail_Click());
         btnNotifications.onClick.AddListener(() => Notifications_Click());
-        btnAdministration.onClick.AddListener(() => Administration_Click());
-        btnQuota.onClick.AddListener(() => Quota_Click());
+        btnDelete.onClick.AddListener(() => Delete_Click());
+        //btnAdministration.onClick.AddListener(() => Administration_Click());
+        //btnQuota.onClick.AddListener(() => Quota_Click());
 
         GridViewManager.Instance.SetUpGridData(identity);
     }
@@ -97,7 +103,11 @@ public class ListViewManager : MonoBehaviour
     {
         GridViewManager.Instance.SetUpGridData(notifications);
     }
-    private void Administration_Click()
+    private void Delete_Click()
+    {
+        GridViewManager.Instance.SetUpGridData(delete);
+    }
+    /*private void Administration_Click()
     {
         GridViewManager.Instance.SetUpGridData(administration);
     }
@@ -105,7 +115,7 @@ public class ListViewManager : MonoBehaviour
     private void Quota_Click()
     {
         GridViewManager.Instance.SetUpGridData(quota);
-    }
+    }*/
 }
 [Serializable]
 public class GridDataItem

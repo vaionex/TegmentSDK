@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -66,7 +65,7 @@ namespace Tegment.SmartContracts
             issueRequestFormatter.decimals = _decimals;
             issueRequestFormatter.satsPerToken = _satsPerToken;
 
-            issueRequestFormatter.splitable = _splitable;
+            issueRequestFormatter.splitable = _splitable.ToString().ToLower();
             issueRequestFormatter.data = _data;
 
 
@@ -108,14 +107,16 @@ namespace Tegment.SmartContracts
             issueRequestFormatter.properties = issueRequestProperties;
             //Request Class Data added
             //
+            //Logging
+            TegmentClient.EnableLog = enableLog;
             //Now Add headers
             TegmentClient.DefaultRequestHeaders["protocol"] = _protocol;
-            TegmentClient.DefaultRequestHeaders["reminting"] = _reminting.ToString();
+            TegmentClient.DefaultRequestHeaders["reminting"] = _reminting.ToString().ToLower();
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-
-            TegmentClient.Post<IssueResponseFormatter>(PathConstants.baseURL + PathConstants.issue, issueRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.issue;
+            TegmentClient.Post<IssueResponseFormatter>(path, issueRequestFormatter, callback);
         }
     }
 }

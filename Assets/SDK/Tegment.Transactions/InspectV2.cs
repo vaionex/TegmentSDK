@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -17,7 +16,7 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void InspectTransactionV2(string _swapHex, string _authToken, System.Action<RequestException, ResponseHelper, InspectResponseFormatter> callback, bool enableLog=false)
+        public static void InspectTransactionV2(string _swapHex, string _authToken, System.Action<RequestException, ResponseHelper, InspectV2ResponseFormatter> callback, bool enableLog=false)
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function InspectTransactionV2");
@@ -29,9 +28,11 @@ namespace Tegment.Transaction
             inspectRequestFormatter.dataArray = new InspectRequestDataArray[1];
             inspectRequestFormatter.dataArray[0] = inspectRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Post<InspectResponseFormatter>(PathConstants.baseURL + PathConstants.inspect, inspectRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.inspect;
+            TegmentClient.Post<InspectV2ResponseFormatter>(path, inspectRequestFormatter, callback);
         }
     }
 }

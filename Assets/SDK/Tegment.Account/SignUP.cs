@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Tegment.ResponseFormatter;
 using Tegment.RequestFormatter;
 using Tegment.Network;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -30,10 +25,13 @@ namespace Tegment.Account
             signUpRequestFormatter.email = _email;
             signUpRequestFormatter.password = _password;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
 
-            TegmentClient.Post<SignUpResponseFormatter>(PathConstants.baseURL + PathConstants.signUP, signUpRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.signUP;
+            TegmentClient.Post<SignUpResponseFormatter>(path, signUpRequestFormatter, callback);
         }
     }
 }

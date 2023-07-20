@@ -1,7 +1,8 @@
-using UnityEngine;
-using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
+using Tegment.Network;
+using Tegment.Logs;
+
 
 namespace Tegment.Utility
 {
@@ -15,24 +16,26 @@ namespace Tegment.Utility
         /// <param name="_fileName"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<UploadUtilityResponseFormatter> UploadFile(string _fileUrl, string _fileName, string _walletID, string _authToken)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void UploadFile(string _fileUrl, string _fileName, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, UploadUtilityResponseFormatter> callback, bool enableLog = false)
         {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function GetauthToken");
+
+
             UploadUtilityRequestFormatter uploadUtilityRequestFormatter = new UploadUtilityRequestFormatter();
             uploadUtilityRequestFormatter.fileUrl = _fileUrl;
             uploadUtilityRequestFormatter.fileName = _fileName;
 
+            TegmentClient.EnableLog = enableLog;
 
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            APIResponseFormatter<UploadUtilityResponseFormatter> apiResponseFormatter = new APIResponseFormatter<UploadUtilityResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.upload, uploadUtilityRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<UploadUtilityResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<UploadUtilityResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            string path = PathConstants.baseURL + PathConstants.upload;
+            TegmentClient.Post<UploadUtilityResponseFormatter>(path, uploadUtilityRequestFormatter, callback);
         }
     }
 }

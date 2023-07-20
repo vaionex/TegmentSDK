@@ -1,6 +1,4 @@
-using UnityEngine;
 using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Utility;
 using Tegment.Logs;
@@ -21,7 +19,10 @@ namespace Tegment.Transaction
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetPaymentRequest");
 
-            TegmentClient.Get<PaymentRequestResponseFormatter>(PathConstants.baseURL + PathConstants.paymentRequest + _invoiceId, callback);
+            TegmentClient.EnableLog = enableLog;
+
+            string path = PathConstants.baseURL + PathConstants.paymentRequest.Replace("{invoiceId}", _invoiceId);
+            TegmentClient.Get<PaymentRequestResponseFormatter>(path, callback);
         }
     }
 }

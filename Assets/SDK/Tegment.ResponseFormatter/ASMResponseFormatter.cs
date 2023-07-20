@@ -12,5 +12,6 @@ namespace Tegment.ResponseFormatter
     {
         public string status;
         public string msg;
+        public string txid;
     }
 }

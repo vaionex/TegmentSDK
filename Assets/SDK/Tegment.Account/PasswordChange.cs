@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
 using Tegment.Network;
-using UnityEngine;
 using Tegment.Utility;
 using Tegment.Logs;
 
@@ -27,11 +24,14 @@ namespace Tegment.Account
             PasswordChangeRequestFormatter passwordChangeRequestFormatter = new PasswordChangeRequestFormatter();
             passwordChangeRequestFormatter.newPassword = _newPassword;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-            TegmentClient.Post<PasswordChangeResponseFormatter>(PathConstants.baseURL + PathConstants.passwordChange, passwordChangeRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.passwordChange;
+            TegmentClient.Post<PasswordChangeResponseFormatter>(path, passwordChangeRequestFormatter, callback);
         }
     }
 }

@@ -1,7 +1,7 @@
-using UnityEngine;
-using Tegment.Network;
-using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
+using Tegment.RequestFormatter;
+using Tegment.Network;
+using Tegment.Logs;
 
 namespace Tegment.Utility
 {
@@ -13,23 +13,24 @@ namespace Tegment.Utility
         /// </summary>
         /// <param name="_force"></param>
         /// <param name="_sourceCode"></param>
-        /// <param name="_currency"></param>
-        /// <returns></returns>
-        public static APIResponseFormatter<TranspileResponseFormatter> Transpile_sCrypt(bool _force, string _sourceCode, string _currency)
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        public static void Transpile_sCrypt(bool _force, string _sourceCode, System.Action<RequestException, ResponseHelper, TranspileResponseFormatter> callback, bool enableLog = false)
         {
+
+            if (enableLog)
+                LogManager.WriteToLog("Request Function Transpile_sCrypt");
+
+            TegmentClient.EnableLog = enableLog;
+
             TranspileRequestFormatter transpileRequestFormatter = new TranspileRequestFormatter();
             transpileRequestFormatter.sourceCode = _sourceCode;
 
 
-            TegmentClient.DefaultRequestHeaders["force"] = _force.ToString();
-           
-            APIResponseFormatter<TranspileResponseFormatter> apiResponseFormatter = new APIResponseFormatter<TranspileResponseFormatter>();
-            TegmentClient.Post<string>(PathConstants.baseURL + PathConstants.transpile, transpileRequestFormatter).Then(response => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<TranspileResponseFormatter>>(response.ToString());
-            }).Catch(err => {
-                apiResponseFormatter = JsonUtility.FromJson<APIResponseFormatter<TranspileResponseFormatter>>(err.ToString());
-            });
-            return apiResponseFormatter;
+            TegmentClient.DefaultRequestHeaders["force"] = _force.ToString().ToLower();
+
+            string path = PathConstants.baseURL + PathConstants.transpile;
+            TegmentClient.Post<TranspileResponseFormatter>(path, transpileRequestFormatter, callback);
         }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-
+//Response checked
 namespace Tegment.ResponseFormatter
 {
     [Serializable]
@@ -12,5 +12,6 @@ namespace Tegment.ResponseFormatter
     public class ExchangeSwapOfferData { 
         public string status;
         public string msg;
+        public string[] txIds;
     }
 }

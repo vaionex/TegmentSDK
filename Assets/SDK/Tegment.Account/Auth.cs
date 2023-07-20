@@ -1,11 +1,9 @@
-using UnityEngine;
 using Tegment.ResponseFormatter;
 using Tegment.RequestFormatter;
 using Tegment.Network;
 using Tegment.Utility;
-using System.Collections;
-using System.Threading.Tasks;
 using Tegment.Logs;
+
 namespace Tegment.Account
 {
     public static partial class Auth
@@ -32,7 +30,9 @@ namespace Tegment.Account
 
             TegmentClient.DefaultRequestHeaders["Content-Type"]= "application/json";
             TegmentClient.DefaultRequestHeaders["accept"]= "*/*";
-            TegmentClient.Post<AuthResponseFormatter> (PathConstants.baseURL + PathConstants.auth, authRequestFormatter, callback);
+
+            string path = PathConstants.baseURL + PathConstants.auth;
+            TegmentClient.Post<AuthResponseFormatter> (path, authRequestFormatter, callback);
         }
     }
 }

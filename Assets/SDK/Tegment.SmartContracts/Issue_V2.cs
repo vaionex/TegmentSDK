@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -43,11 +42,11 @@ namespace Tegment.SmartContracts
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void MintIssueV2(string _name, string _protocolId, string _symbol,
+        public static void MintIssueV2(string _name, string _symbol,
              string _description, string _image, int _tokenSupply, int _decimals, int _satsPerToken, string _terms, string _licenceId,
              string _organisation, string _legalForm, string _governingLaw, string _issuerCountry, string _jurisdiction, string _email,
-             string _schemaId, string _website, string _legalTerms, string _URI, string _type, string _altURI, bool _splitable, object _data,
-             string _protocol, bool _reminting, string _walletID, string _authToken,
+             string _schemaId, string _website, string _legalTerms, string _URI, string _type_media, string _altURI, object _data,
+             string _protocol, bool _reminting, string _type, string _walletID, string _authToken,
              System.Action<RequestException, ResponseHelper, IssueV2ResponseFormatter> callback, bool enableLog = false)
         {
             if (enableLog)
@@ -87,7 +86,7 @@ namespace Tegment.SmartContracts
 
             IssueV2RequestProperties_Media issueV2RequestProperties_Media = new IssueV2RequestProperties_Media();
             issueV2RequestProperties_Media.URI = _URI;
-            issueV2RequestProperties_Media.type = _type;
+            issueV2RequestProperties_Media.type = _type_media;
             issueV2RequestProperties_Media.altURI = _altURI;
 
             IssueV2RequestProperties_Meta issueV2RequestProperties_Meta = new IssueV2RequestProperties_Meta();
@@ -105,14 +104,18 @@ namespace Tegment.SmartContracts
             issueV2RequestFormatter.properties = issueV2RequestProperties;
             //Request Class Data added
             //
+
+            //Logging
+            TegmentClient.EnableLog = enableLog;
             //Now Add headers
             TegmentClient.DefaultRequestHeaders["protocol"] = _protocol;
-            TegmentClient.DefaultRequestHeaders["reminting"] = _reminting.ToString();
+            TegmentClient.DefaultRequestHeaders["reminting"] = _reminting.ToString().ToLower();
+            TegmentClient.DefaultRequestHeaders["type"] = _type;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
-
-            TegmentClient.Post<IssueV2ResponseFormatter>(PathConstants.baseURL + PathConstants.issue, issueV2RequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.issue_v2;
+            TegmentClient.Post<IssueV2ResponseFormatter>(path, issueV2RequestFormatter, callback);
         }
     }
 }

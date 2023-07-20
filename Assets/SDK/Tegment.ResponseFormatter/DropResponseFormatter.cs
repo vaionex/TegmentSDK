@@ -1,4 +1,5 @@
 using System;
+//Response checked
 namespace Tegment.ResponseFormatter
 {
     [Serializable]
@@ -11,5 +12,7 @@ namespace Tegment.ResponseFormatter
     public class DropResponseData { 
         public string status;
         public string msg;
+        public string[] txIds;
+        public string[] errors;
     }
 }

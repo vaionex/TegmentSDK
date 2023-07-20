@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -30,10 +29,13 @@ namespace Tegment.Transaction
             swapRequestFormatter.dataArray = new SwapRequestDataArray[1];
             swapRequestFormatter.dataArray[0] = swapRequestDataArray;
 
+            TegmentClient.EnableLog = enableLog;
+
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
 
-            TegmentClient.Post<SwapResponseFormatter>(PathConstants.baseURL + PathConstants.swap, swapRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.swap;
+            TegmentClient.Post<SwapResponseFormatter>(path, swapRequestFormatter, callback);
         }
     }
 }

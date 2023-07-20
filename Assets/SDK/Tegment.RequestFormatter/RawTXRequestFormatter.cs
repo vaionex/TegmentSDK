@@ -11,5 +11,7 @@ namespace Tegment.RequestFormatter
     {
         public string to;
         public double amount;
+        public string tokenId;
+        public int sn;
     }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Tegment.Utility
 {
@@ -36,15 +33,16 @@ namespace Tegment.Utility
         public const string inspect = "/v1/inspect";
         public const string pay = "/v1/pay";
         public const string invoice = "/v1/invoice";
-        public const string paymentRequest = "/v1/paymentRequest/"; //get param {invoiceId}// invoice id added in url in implementation
-        public const string paymentRequest_Pay = "/v1/paymentRequest/pay/";//param {invoiceId}// invoice id added in url from implementation
+        public const string paymentRequest = "/v1/paymentRequest/{invoiceId}";
+        public const string paymentRequest_Pay = "/v1/paymentRequest/pay/{invoiceId}";
         public const string asm = "/v1/asm";
       
         //Smart contracts
         public const string issue = "/v1/issue";
-        public const string token_v1 = "/v1/token/";//Get param Token Id {id}// ID added in url from implementation
+        public const string token_v1 = "/v1/token/{id}";
         public const string redeem = "/v1/redeem";
-        public const string token_v2 = "/v2/token/";//Get param Token Id {id}// ID added in url from implementation
+        public const string token_v2 = "/v2/token/{id}";
+        public const string issue_v2 = "/v2/issue";
 
         //Utility
         public const string URI = "/v1/URI";
@@ -59,19 +57,19 @@ namespace Tegment.Utility
 
 
         //paymail
-        public const string paymail_Get = "/v1/paymail/{paymailId}";//Get Param PaymailID
+        public const string paymail_Get = "/v1/paymail/{paymailId}";
         public const string paymail_Put = "/v1/paymail";
         public const string paymail_Activate = "/v1/paymail/activate";
-        public const string bsvalias_Get = "/v1/bsvalias/id/{paymail}";
-        public const string bsvalias_Address = "/v1/bsvalias/address/{paymail}";
-        public const string bsvalias_Verifypubkey = "/v1/bsvalias/verifypubkey/{paymail}/{pubkey}";
-        public const string bsvalias_receiveTranssaction = "/v1/bsvalias/receive-transaction/{paymail}";
-        public const string bsvalias_P2P_PaymentDestination = "/v1/bsvalias/p2p-payment-destination/{paymail}";
+        public const string bsvalias_Get = "/v1/bsvalias/id/{paymailId}";
+        public const string bsvalias_Address = "/v1/bsvalias/address/{paymailId}";
+        public const string bsvalias_Verifypubkey = "/v1/bsvalias/verifypubkey/{paymailId}/{pubkey}";
+        public const string bsvalias_receiveTranssaction = "/v1/bsvalias/receive-transaction/{paymailId}";
+        public const string bsvalias_P2P_PaymentDestination = "/v1/bsvalias/p2p-payment-destination/{paymailId}";
         public const string bsvalias_wellknown = "/.well-known/bsvalias";
 
         //Notifications
         public const string notification_Token = "/v1/notificationToken/{userId}";
-        public const string send_notification = "/v1/sendnotification";
+        public const string send_notification = "/v1/sendNotification";
 
         //Delete
         public const string delete_user = "/v1/user";

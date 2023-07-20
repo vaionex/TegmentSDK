@@ -1,5 +1,5 @@
 using System;
-
+//Response Checked
 namespace Tegment.ResponseFormatter
 {
     [Serializable]
@@ -12,5 +12,6 @@ namespace Tegment.ResponseFormatter
     public class RawTxResponseData { 
         public string status;
         public string msg;
+        public string[] rawTxs;
     }
 }

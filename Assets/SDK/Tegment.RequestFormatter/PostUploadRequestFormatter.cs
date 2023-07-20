@@ -5,7 +5,7 @@ namespace Tegment.RequestFormatter
     [Serializable]
     public class PostUploadRequestFormatter 
     {
-        public PostUploadRequestData[] data;
+        public PostUploadRequestData[] dataArray;
     }
     [Serializable]
     public class PostUploadRequestData {

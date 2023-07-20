@@ -1,4 +1,3 @@
-using UnityEngine;
 using Tegment.Network;
 using Tegment.RequestFormatter;
 using Tegment.ResponseFormatter;
@@ -56,10 +55,12 @@ namespace Tegment.Transaction
             payRequestFormatter.peerData = _peerData;
             payRequestFormatter.peerProtocol = _peerProtocol;
 
+            TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
 
-            TegmentClient.Post<PayResponseFormatter>(PathConstants.baseURL + PathConstants.pay, payRequestFormatter, callback);
+            string path = PathConstants.baseURL + PathConstants.pay;
+            TegmentClient.Post<PayResponseFormatter>(path, payRequestFormatter, callback);
         }
     }
 }

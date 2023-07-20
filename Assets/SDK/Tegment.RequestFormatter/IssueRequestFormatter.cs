@@ -14,7 +14,7 @@ namespace Tegment.RequestFormatter
         public int decimals;
         public int satsPerToken;
         public IssueRequestProperties properties;
-        public bool splitable;
+        public string splitable;
         public object data;
     }
     [Serializable]

@@ -1,5 +1,5 @@
 using System;
-
+// Response checked
 namespace Tegment.ResponseFormatter
 {
     [Serializable]
@@ -39,5 +39,3 @@ namespace Tegment.ResponseFormatter
         public int decimals;
     }
 }
-
-   

@@ -23,7 +23,7 @@ namespace Tegment.Unity.Samples.Transactions
         public void InspectV2Transaction_Submit()
         {
             responseText.text = "";
-            Tegment.Transaction.InspectV2.InspectTransactionV2(swapHex.text, TegmentSessionHandler.Instance._authToken, InspectTransactionCallBack,true);
+            Tegment.Transaction.InspectV2.InspectTransactionV2(swapHex.text, TegmentSessionHandler.Instance._authToken, InspectV2TransactionCallBack,true);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Tegment.Unity.Samples.Transactions
         /// <param name="exception"></param>
         /// <param name="response"></param>
         /// <param name="inspectTransactionResponse"></param>
-        private void InspectTransactionCallBack(RequestException exception, ResponseHelper response, InspectResponseFormatter inspectTransactionResponse)
+        private void InspectV2TransactionCallBack(RequestException exception, ResponseHelper response, InspectV2ResponseFormatter inspectV2TransactionResponse)
         {
             responseText.text = response.Text;
         }

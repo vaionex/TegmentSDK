@@ -1,0 +1,20 @@
+{
+    "name": "Tegment.Quota",
+    "rootNamespace": "Tegment.Quota",
+    "references": [
+        "GUID:fbfbf4d8d5c249a458d69ae047a2fbd2",
+        "GUID:505b65a887af84b79b66f4d09d2c7b8a",
+        "GUID:8eaa4de95626b4e83a7767b3dc5c9bf0",
+        "GUID:fef0cc8568f2344b5ad38befa2889010",
+        "GUID:3f9641adf8dc446339d2eca5dd50add7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

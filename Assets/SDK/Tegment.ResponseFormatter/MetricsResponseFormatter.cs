@@ -19,7 +19,7 @@ namespace Tegment.ResponseFormatter
     public class MetricsResponseData_data
     {
         public int balance;
-        public MetricsResponseData_UserUtxos userUtxos;
+        public MetricsResponseData_UserUtxos[] userUtxos;
     }
     [Serializable]
     public class MetricsResponseData_UserUtxos
