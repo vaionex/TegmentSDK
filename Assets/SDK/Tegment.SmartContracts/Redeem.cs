@@ -18,7 +18,7 @@ namespace Tegment.SmartContracts
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <returns></returns>
-        public static void RedeemToken(double _amount, string _tokenID, int _sn, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, RedeemResponseFormatter> callback, bool enableLog = false)
+        public static void RedeemToken(double _amount, string _tokenID, int _sn, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, RedeemResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
 
             if (enableLog)
@@ -40,6 +40,10 @@ namespace Tegment.SmartContracts
            
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.redeem;
             TegmentClient.Post<RedeemResponseFormatter>(path, redeemRequestFormatter, callback);

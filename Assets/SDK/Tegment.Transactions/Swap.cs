@@ -17,7 +17,8 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void SwapTransaction(string _swapHex, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, SwapResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void SwapTransaction(string _swapHex, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, SwapResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function SwapTransaction");
@@ -33,6 +34,10 @@ namespace Tegment.Transaction
 
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.swap;
             TegmentClient.Post<SwapResponseFormatter>(path, swapRequestFormatter, callback);

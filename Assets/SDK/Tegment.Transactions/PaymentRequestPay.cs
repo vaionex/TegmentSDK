@@ -31,6 +31,7 @@ namespace Tegment.Transaction
             paymentRequestPayRequestFormatter.refundTo = _refundTo;
             paymentRequestPayRequestFormatter.memo = _memo;
 
+
             TegmentClient.EnableLog = enableLog;
 
             string path = PathConstants.baseURL + PathConstants.paymentRequest_Pay.Replace("{invoiceId}",_invoiceId);

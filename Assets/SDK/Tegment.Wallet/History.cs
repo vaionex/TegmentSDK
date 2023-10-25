@@ -18,7 +18,8 @@ namespace Tegment.Wallet
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetHistory(string _nextPageToken, string _tokenId, string _walletID, string _type, string _authToken, System.Action<RequestException, ResponseHelper, HistoryResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetHistory(string _nextPageToken, string _tokenId, string _walletID, string _type, string _authToken, System.Action<RequestException, ResponseHelper, HistoryResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetHistory");
@@ -37,6 +38,10 @@ namespace Tegment.Wallet
             if (!string.IsNullOrEmpty(_type))
             {
                 TegmentClient.DefaultRequestHeaders["type"] = _type;
+            }
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
             }
 
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;

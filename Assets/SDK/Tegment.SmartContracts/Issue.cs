@@ -42,12 +42,13 @@ namespace Tegment.SmartContracts
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
         public static void MintIssue(string _name, string _protocolId, string _symbol,
             string _description, string _image, int _tokenSupply, int _decimals, int _satsPerToken, string _terms, string _licenceId,
             string _organisation, string _legalForm, string _governingLaw, string _issuerCountry, string _jurisdiction, string _email,
             string _schemaId, string _website, string _legalTerms,string _URI, string _type,string _altURI, bool _splitable, object _data,
             string _protocol, bool _reminting, string _walletID, string _authToken,
-            System.Action<RequestException, ResponseHelper, IssueResponseFormatter> callback, bool enableLog = false)
+            System.Action<RequestException, ResponseHelper, IssueResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function MintIssue");
@@ -114,6 +115,10 @@ namespace Tegment.SmartContracts
             TegmentClient.DefaultRequestHeaders["reminting"] = _reminting.ToString().ToLower();
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.issue;
             TegmentClient.Post<IssueResponseFormatter>(path, issueRequestFormatter, callback);

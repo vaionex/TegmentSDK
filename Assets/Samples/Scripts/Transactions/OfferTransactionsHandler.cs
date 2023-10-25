@@ -56,7 +56,7 @@ namespace Tegment.Unity.Samples.Transactions
                 snVal = int.Parse(sn.text);
             }
             responseText.text = "";
-            Tegment.Transaction.Offer.OfferTransaction(snVal,tokenId.text, amountVal, wantedAmountVal,walletId.text, TegmentSessionHandler.Instance._authToken, OfferTransactionCallBack);
+            Tegment.Transaction.Offer.OfferTransaction(snVal,tokenId.text, amountVal, wantedAmountVal,walletId.text, TegmentSessionHandler.Instance._authToken, OfferTransactionCallBack,true);
         }
 
         /// <summary>

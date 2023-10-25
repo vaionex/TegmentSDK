@@ -16,7 +16,8 @@ namespace Tegment.Account
         /// <param name="_password"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void SignUPAccount(string _email, string _password, System.Action<RequestException, ResponseHelper, SignUpResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void SignUPAccount(string _email, string _password, System.Action<RequestException, ResponseHelper, SignUpResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function SignUPAccount");
@@ -29,6 +30,11 @@ namespace Tegment.Account
 
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.signUP;
             TegmentClient.Post<SignUpResponseFormatter>(path, signUpRequestFormatter, callback);

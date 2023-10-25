@@ -20,7 +20,8 @@ namespace Tegment.Wallet
         /// <param name="_type"></param>
         /// <param name="_walletLogo"></param>
         /// <param name="enableLog"></param>
-        public static void CreateWalletAccount(string _walletTitle, bool _paymailActivate, string _authToken, System.Action<RequestException, ResponseHelper, CreateWalletResponseFormatter> callback, string _mnemonicPhrase = null, string _paymail = null, string _type = null, string _walletLogo = null, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void CreateWalletAccount(string _walletTitle, bool _paymailActivate, string _authToken, System.Action<RequestException, ResponseHelper, CreateWalletResponseFormatter> callback, string _mnemonicPhrase = null, string _paymail = null, string _type = null, string _walletLogo = null, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function CreateWalletAccount");
@@ -48,8 +49,11 @@ namespace Tegment.Wallet
             {
                 TegmentClient.DefaultRequestHeaders["walletLogo"] = _walletLogo;
             }
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
-         
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 
 

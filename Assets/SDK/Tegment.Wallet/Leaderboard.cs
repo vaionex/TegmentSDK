@@ -16,7 +16,8 @@ namespace Tegment.Wallet
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetLeaderboard(string _nextPageToken, string _tokenId, string _authToken, System.Action<RequestException, ResponseHelper, LeaderboardResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetLeaderboard(string _nextPageToken, string _tokenId, string _authToken, System.Action<RequestException, ResponseHelper, LeaderboardResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetLeaderboard");
@@ -30,6 +31,10 @@ namespace Tegment.Wallet
 
             TegmentClient.DefaultRequestHeaders["tokenId"] = _tokenId;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.leaderboard;
             TegmentClient.Get<LeaderboardResponseFormatter>(path, callback);

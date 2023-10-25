@@ -15,7 +15,8 @@ namespace Tegment.Account
         /// <param name="_email"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void ResetUserPassword(string _email,  System.Action<RequestException, ResponseHelper, ResetPasswordResponseFormatter> callback,bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void ResetUserPassword(string _email,  System.Action<RequestException, ResponseHelper, ResetPasswordResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function ResetUserPassword");
@@ -27,6 +28,10 @@ namespace Tegment.Account
 
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.passwordReset;
             TegmentClient.Post<ResetPasswordResponseFormatter>(path, resetPasswordRequestFormatter,callback);

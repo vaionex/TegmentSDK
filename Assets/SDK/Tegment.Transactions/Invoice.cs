@@ -25,9 +25,10 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
         public static void CreateInvoice(string _type, double _amount,string _address, string _description,
             int _expirationTimeInMinuts, string _memo, string _merchantData, InvoiceRequestPaymentOptions[] _paymentOptions, string _modeId,
-            InvoiceRequestBenificiary _beneficiary, string _authToken, System.Action<RequestException, ResponseHelper, InvoiceResponseFormatter> callback, bool enableLog=false)
+            InvoiceRequestBenificiary _beneficiary, string _authToken, System.Action<RequestException, ResponseHelper, InvoiceResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
 
             if (enableLog)
@@ -48,6 +49,10 @@ namespace Tegment.Transaction
 
             TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.invoice;
             TegmentClient.Post<InvoiceResponseFormatter>(path, invoiceRequestFormatter, callback);

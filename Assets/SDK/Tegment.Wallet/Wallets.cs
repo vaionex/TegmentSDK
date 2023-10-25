@@ -15,7 +15,8 @@ namespace Tegment.Wallet
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetWallets(string _authToken, System.Action<RequestException, ResponseHelper, WalletsResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetWallets(string _authToken, System.Action<RequestException, ResponseHelper, WalletsResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetWallets");
@@ -24,6 +25,11 @@ namespace Tegment.Wallet
 
             TegmentClient.DefaultRequestHeaders["oauth"] = _authToken;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
 
             string path = PathConstants.baseURL + PathConstants.wallets;

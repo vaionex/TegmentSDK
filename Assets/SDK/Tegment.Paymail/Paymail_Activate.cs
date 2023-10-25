@@ -8,7 +8,16 @@ namespace Tegment.Paymail
 {
     public static partial class Paymail_Activate
     {
-        public static void PaymailActivate_DeActivate (bool _activate, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, PaymailActivateResponseFormatter> callback, bool enableLog = false)
+        /// <summary>
+        /// To activate or deactivate paymail
+        /// </summary>
+        /// <param name="_activate"></param>
+        /// <param name="_walletID"></param>
+        /// <param name="_authToken"></param>
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
+        public static void PaymailActivate_DeActivate (bool _activate, string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, PaymailActivateResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function PaymailActivate_DeActivate");
@@ -22,6 +31,10 @@ namespace Tegment.Paymail
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.paymail_Activate;
             TegmentClient.Post<PaymailActivateResponseFormatter>(path, paymailActivateRequestFormatter, callback);

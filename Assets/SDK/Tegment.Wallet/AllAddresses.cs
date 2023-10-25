@@ -15,7 +15,8 @@ namespace Tegment.Wallet
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetAllAddress(string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, AllAddressResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetAllAddress(string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, AllAddressResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetAllAddress");
@@ -24,6 +25,10 @@ namespace Tegment.Wallet
 
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.allAddresses;
             TegmentClient.Get<AllAddressResponseFormatter>(path, callback);

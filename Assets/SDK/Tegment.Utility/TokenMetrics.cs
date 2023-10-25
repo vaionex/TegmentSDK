@@ -15,7 +15,8 @@ namespace Tegment.Utility
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void TokenMetricsSync(string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, TokenMetricsResponseFormatter> callback, bool enableLog = false)
+        /// <param name="_serviceId"></param>
+        public static void TokenMetricsSync(string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, TokenMetricsResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
 
             if (enableLog)
@@ -25,6 +26,10 @@ namespace Tegment.Utility
 
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.tokenMetrics;
             TegmentClient.Get<TokenMetricsResponseFormatter>(path, callback);

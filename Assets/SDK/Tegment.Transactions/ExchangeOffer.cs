@@ -23,7 +23,8 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void ExchangeOfferTransaction(string _tokenId, int _sn, double _amount,string _type, ExchangeOfferRequestPayment[] _exchangeOfferPayment, string _walletID, string _authToken,System.Action<RequestException, ResponseHelper, ExchangeOfferResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void ExchangeOfferTransaction(string _tokenId, int _sn, double _amount,string _type, ExchangeOfferRequestPayment[] _exchangeOfferPayment, string _walletID, string _authToken,System.Action<RequestException, ResponseHelper, ExchangeOfferResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function ExchangeOfferTransaction");
@@ -46,6 +47,10 @@ namespace Tegment.Transaction
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.exchangeOffer;
             TegmentClient.Post<ExchangeOfferResponseFormatter>(path, exchangeOfferRequestFormatter, callback);

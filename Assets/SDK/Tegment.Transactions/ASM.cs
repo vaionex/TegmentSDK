@@ -29,8 +29,10 @@ namespace Tegment.Transaction
             aSMRequestDataArray.amount = _amount;
 
             TegmentClient.EnableLog = enableLog;
-
-            TegmentClient.DefaultRequestHeaders["serviceId"] = _serviceId;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
             TegmentClient.DefaultRequestHeaders["walletId"] = _walletId;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
 

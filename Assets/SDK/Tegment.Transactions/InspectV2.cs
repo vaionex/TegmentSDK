@@ -16,7 +16,8 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void InspectTransactionV2(string _swapHex, string _authToken, System.Action<RequestException, ResponseHelper, InspectV2ResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void InspectTransactionV2(string _swapHex, string _authToken, System.Action<RequestException, ResponseHelper, InspectV2ResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function InspectTransactionV2");
@@ -30,6 +31,10 @@ namespace Tegment.Transaction
 
             TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.inspect;
             TegmentClient.Post<InspectV2ResponseFormatter>(path, inspectRequestFormatter, callback);

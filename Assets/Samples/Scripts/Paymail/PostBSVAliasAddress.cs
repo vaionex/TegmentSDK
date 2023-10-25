@@ -38,7 +38,7 @@ namespace Tegment.Unity.Samples.Paymail
                 amountVal = double.Parse(amount.text);
             }
 
-            Tegment.Paymail.BSVAlias_Address.PostBSVAliasAdress(paymail.text,senderHandle.text,dt.text,signature.text,amountVal,purpose.text,senderName.text, PostBSVAliasAddressResponseCallBack, true);
+            Tegment.Paymail.BSVAlias_Address.PostBSVAliasAddress(paymail.text,senderHandle.text,dt.text,signature.text,amountVal,purpose.text,senderName.text, PostBSVAliasAddressResponseCallBack, true);
 
         }
 

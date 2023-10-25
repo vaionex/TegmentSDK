@@ -20,7 +20,8 @@ namespace Tegment.Wallet
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetBalanceData(string _nextPageToken,string _walletID, string _type,string _currency, string _compact, int _maxResults,  string _authToken, System.Action<RequestException, ResponseHelper, BalanceResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetBalanceData(string _nextPageToken,string _walletID, string _type,string _currency, string _compact, int _maxResults,  string _authToken, System.Action<RequestException, ResponseHelper, BalanceResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
 
             if (enableLog)
@@ -50,6 +51,10 @@ namespace Tegment.Wallet
             if (_maxResults > 0)
             {
                 TegmentClient.DefaultRequestHeaders["maxResults"] = _maxResults.ToString();
+            }
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
             }
 
             TegmentClient.EnableLog = enableLog;

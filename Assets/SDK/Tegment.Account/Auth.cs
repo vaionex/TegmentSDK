@@ -16,7 +16,7 @@ namespace Tegment.Account
         /// <param name="_password"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetauthToken(string _email, string _password, System.Action<RequestException, ResponseHelper,AuthResponseFormatter> callback, bool enableLog=false)
+        public static void GetauthToken(string _email, string _password, System.Action<RequestException, ResponseHelper,AuthResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if(enableLog)
                 LogManager.WriteToLog("Request Function GetauthToken");
@@ -30,7 +30,10 @@ namespace Tegment.Account
 
             TegmentClient.DefaultRequestHeaders["Content-Type"]= "application/json";
             TegmentClient.DefaultRequestHeaders["accept"]= "*/*";
-
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
             string path = PathConstants.baseURL + PathConstants.auth;
             TegmentClient.Post<AuthResponseFormatter> (path, authRequestFormatter, callback);
         }

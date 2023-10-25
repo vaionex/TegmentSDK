@@ -27,7 +27,7 @@ namespace Tegment.Unity.Samples.Transactions
         /// <summary>
         /// Submit button click handler
         /// </summary>
-        public void PaymentRequestPay_Submit()
+        public void ASMScript_Submit()
         {
             responseText.text = "";
             double amountVal = 0;

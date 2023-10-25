@@ -14,7 +14,8 @@ namespace Tegment.Account
         /// <param name="_oauth"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void GetUserInfo(string _oauth, System.Action<RequestException, ResponseHelper, UserInfoResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void GetUserInfo(string _oauth, System.Action<RequestException, ResponseHelper, UserInfoResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetUserInfo");
@@ -27,6 +28,11 @@ namespace Tegment.Account
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
             TegmentClient.DefaultRequestHeaders["oauth"] = _oauth;
             TegmentClient.DefaultRequestHeaders["authToken"] = _oauth;
+
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.user;
             TegmentClient.Get<UserInfoResponseFormatter>(path,callback);

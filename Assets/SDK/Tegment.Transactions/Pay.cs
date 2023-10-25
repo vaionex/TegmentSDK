@@ -30,10 +30,11 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
         public static void PayTransaction(string _uri, string _type, string _mainProtocol, PayOutputRequest[] _Outputs,
             PayInputRequest[] _Inputs,string _network, string _paymentURL,int _creationTimeStamp, int _expirationTimeStamp,string _memo,
             string _isBSV,string _peer, string _peerData, string _peerProtocol, string _walletID, string _authToken,
-            System.Action<RequestException, ResponseHelper, PayResponseFormatter> callback, bool enableLog=false)
+            System.Action<RequestException, ResponseHelper, PayResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
 
             if (enableLog)
@@ -58,6 +59,10 @@ namespace Tegment.Transaction
             TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.pay;
             TegmentClient.Post<PayResponseFormatter>(path, payRequestFormatter, callback);

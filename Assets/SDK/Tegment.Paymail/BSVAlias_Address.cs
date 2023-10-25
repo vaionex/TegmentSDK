@@ -8,7 +8,20 @@ namespace Tegment.Paymail
 {
     public static partial class BSVAlias_Address
     {
-        public static void PostBSVAliasAdress(string _paymail, string _senderHandle, string _dt,string _signature, double _amount, string _purpose, string _senderName,  System.Action<RequestException, ResponseHelper, BSVAlias_AddressResponseFormatter> callback, bool enableLog = false)
+        /// <summary>
+        /// Post BSVAlias Address
+        /// </summary>
+        /// <param name="_paymail"></param>
+        /// <param name="_senderHandle"></param>
+        /// <param name="_dt"></param>
+        /// <param name="_signature"></param>
+        /// <param name="_amount"></param>
+        /// <param name="_purpose"></param>
+        /// <param name="_senderName"></param>
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
+        public static void PostBSVAliasAddress(string _paymail, string _senderHandle, string _dt,string _signature, double _amount, string _purpose, string _senderName,  System.Action<RequestException, ResponseHelper, BSVAlias_AddressResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function PostBSVAliasAdress");
@@ -25,6 +38,10 @@ namespace Tegment.Paymail
 
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.bsvalias_Address.Replace("{paymailId}", _paymail);
             TegmentClient.Post<BSVAlias_AddressResponseFormatter>(path, bSVAlias_AddressRequestFormatter, callback);

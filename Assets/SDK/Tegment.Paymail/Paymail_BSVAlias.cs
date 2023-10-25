@@ -7,7 +7,14 @@ namespace Tegment.Paymail
 {
     public static partial class Paymail_BSVAlias
     {
-        public static void GetPaymailBSVAlias(string _paymail, System.Action<RequestException, ResponseHelper, PaymailBSVAliasResponseFormatter> callback, bool enableLog = false)
+        /// <summary>
+        /// Get Paymail BSV Alias
+        /// </summary>
+        /// <param name="_paymail"></param>
+        /// <param name="callback"></param>
+        /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
+        public static void GetPaymailBSVAlias(string _paymail, System.Action<RequestException, ResponseHelper, PaymailBSVAliasResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function GetPaymailBSVAlias");
@@ -16,6 +23,10 @@ namespace Tegment.Paymail
 
             TegmentClient.DefaultRequestHeaders["Content-Type"] = "application/json";
             TegmentClient.DefaultRequestHeaders["accept"] = "*/*";
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.bsvalias_Get.Replace("{paymailId}",_paymail);
             TegmentClient.Get<PaymailBSVAliasResponseFormatter>(path, callback);

@@ -23,7 +23,8 @@ namespace Tegment.Transaction
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
-        public static void OfferTransaction(int _sn, string _tokenId, double _amount, double _wantedAmount,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, OfferResponseFormatter> callback, bool enableLog=false)
+        /// <param name="_serviceId"></param>
+        public static void OfferTransaction(int _sn, string _tokenId, double _amount, double _wantedAmount,string _walletID, string _authToken, System.Action<RequestException, ResponseHelper, OfferResponseFormatter> callback, bool enableLog=false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function OfferTransaction");
@@ -41,6 +42,10 @@ namespace Tegment.Transaction
             TegmentClient.EnableLog = enableLog;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.offer;
             TegmentClient.Post<OfferResponseFormatter>(path, offerRequestFormatter, callback);

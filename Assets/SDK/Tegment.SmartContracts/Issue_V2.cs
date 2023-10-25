@@ -13,7 +13,6 @@ namespace Tegment.SmartContracts
         /// Mint a token with given specifications (can be both token or NFT)
         /// </summary>
         /// <param name="_name"></param>
-        /// <param name="_protocolId"></param>
         /// <param name="_symbol"></param>
         /// <param name="_description"></param>
         /// <param name="_image"></param>
@@ -32,22 +31,23 @@ namespace Tegment.SmartContracts
         /// <param name="_website"></param>
         /// <param name="_legalTerms"></param>
         /// <param name="_URI"></param>
-        /// <param name="_type"></param>
+        /// <param name="_type_media"></param>
         /// <param name="_altURI"></param>
-        /// <param name="_splitable"></param>
         /// <param name="_data"></param>
         /// <param name="_protocol"></param>
         /// <param name="_reminting"></param>
+        /// <param name="_type"></param>
         /// <param name="_walletID"></param>
         /// <param name="_authToken"></param>
         /// <param name="callback"></param>
         /// <param name="enableLog"></param>
+        /// <param name="_serviceId"></param>
         public static void MintIssueV2(string _name, string _symbol,
              string _description, string _image, int _tokenSupply, int _decimals, int _satsPerToken, string _terms, string _licenceId,
              string _organisation, string _legalForm, string _governingLaw, string _issuerCountry, string _jurisdiction, string _email,
              string _schemaId, string _website, string _legalTerms, string _URI, string _type_media, string _altURI, object _data,
              string _protocol, bool _reminting, string _type, string _walletID, string _authToken,
-             System.Action<RequestException, ResponseHelper, IssueV2ResponseFormatter> callback, bool enableLog = false)
+             System.Action<RequestException, ResponseHelper, IssueV2ResponseFormatter> callback, bool enableLog = false, string _serviceId = "")
         {
             if (enableLog)
                 LogManager.WriteToLog("Request Function MintIssueV2");
@@ -113,6 +113,10 @@ namespace Tegment.SmartContracts
             TegmentClient.DefaultRequestHeaders["type"] = _type;
             TegmentClient.DefaultRequestHeaders["walletID"] = _walletID;
             TegmentClient.DefaultRequestHeaders["authToken"] = _authToken;
+            if (!string.IsNullOrEmpty(_serviceId))
+            {
+                TegmentClient.DefaultRequestHeaders["serviceID"] = _serviceId;
+            }
 
             string path = PathConstants.baseURL + PathConstants.issue_v2;
             TegmentClient.Post<IssueV2ResponseFormatter>(path, issueV2RequestFormatter, callback);
