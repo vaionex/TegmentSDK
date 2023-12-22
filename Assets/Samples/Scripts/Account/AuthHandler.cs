@@ -29,7 +29,7 @@ namespace Tegment.Unity.Samples.Authentication
         /// </summary>
         public void Login()
         {
-            Tegment.Account.Auth.GetauthToken(email.text, password.text, AuthCallBack,true);
+            Tegment.Account.Auth.GetauthToken(email.text, password.text, AuthCallBack, true);
         }
         /// <summary>
         /// On Auth callback for response
